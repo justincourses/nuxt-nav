@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { data: partners } = await useAsyncData('partners', () => queryContent('partner')
+const { data: rsources } = await useAsyncData('rsources', () => queryContent('resources')
   .find()
 )
 </script>
@@ -14,7 +14,7 @@ const { data: partners } = await useAsyncData('partners', () => queryContent('pa
     </h2>
     <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
       <a
-        v-for="partner in partners"
+        v-for="partner in rsources"
         :key="partner._id"
         :href="partner.ref"
         :title="partner.summary"

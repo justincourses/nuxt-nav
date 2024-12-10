@@ -91,8 +91,8 @@ const handleAppend = () => {
 }
 
 // 使用 queryContent 直接获取数据
-const { data } = await useAsyncData('partners', () =>
-  queryContent('partner').find()
+const { data } = await useAsyncData('resources', () =>
+  queryContent('resources').find()
 )
 
 // 监听数据变化
