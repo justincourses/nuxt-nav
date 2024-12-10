@@ -22,22 +22,22 @@ export default defineNuxtConfig({
 
   app: {
     head: {
-      title: "Web 开发从入门到上线",
+      title: "Web 开发课程资源",
       meta: [
         { charset: "utf-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
         {
           name: "description",
           content:
-            "从零开始学习 Web 开发，掌握前端技术栈，完成项目从开发到上线的全过程",
+            "Web 开发课程相关的工具、资源、技术和教程的综合性资源网站，为开发者提供实用的学习参考",
         },
         { property: "og:url", content: "https://justincourse.com/" },
         { property: "og:type", content: "website" },
-        { property: "og:title", content: "Web 开发从入门到上线" },
+        { property: "og:title", content: "Web 开发课程资源" },
         {
           property: "og:description",
           content:
-            "从零开始学习 Web 开发，掌握前端技术栈，完成项目从开发到上线的全过程",
+            "Web 开发课程相关的工具、资源、技术和教程的综合性资源网站，为开发者提供实用的学习参考",
         },
         {
           property: "og:image",
@@ -46,11 +46,11 @@ export default defineNuxtConfig({
         { name: "twitter:card", content: "summary_large_image" },
         { property: "twitter:domain", content: "justincourse.com" },
         { property: "twitter:url", content: "https://justincourse.com/" },
-        { name: "twitter:title", content: "Web 开发从入门到上线" },
+        { name: "twitter:title", content: "Web 开发课程资源" },
         {
           name: "twitter:description",
           content:
-            "从零开始学习 Web 开发，掌握前端技术栈，完成项目从开发到上线的全过程",
+            "Web 开发课程相关的工具、资源、技术和教程的综合性资源网站，为开发者提供实用的学习参考",
         },
         {
           name: "twitter:image",
@@ -60,17 +60,6 @@ export default defineNuxtConfig({
       link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
       script: [
         { src: "/tracking.js" },
-        {
-          src: "https://www.googletagmanager.com/gtag/js?id=AW-16781608122",
-          async: true
-        },
-        {
-          children: `window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'AW-16781608122');`,
-          type: 'text/javascript'
-        },
         {
           src: "//cdn.trackdesk.com/tracking.js",
           async: true
@@ -88,9 +77,9 @@ export default defineNuxtConfig({
 
   site: {
     url: "https://justincourse.com",
-    name: "Web 开发从入门到上线",
+    name: "Web 开发课程资源",
     description:
-      "从零开始学习 Web 开发，掌握前端技术栈，完成项目从开发到上线的全过程",
+      "Web 开发课程相关的工具、资源、技术和教程的综合性资源网站，为开发者提供实用的学习参考",
     defaultLocale: "zh",
     identity: {
       type: "Organization",
