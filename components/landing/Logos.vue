@@ -1,6 +1,6 @@
 <template>
   <div class="mt-24">
-    <h2 class="text-center text-slate-500 font-bold mb-10">基于 Nuxt 3 + Vue 3 生态，集成主流开发平台</h2>
+    <h2 class="text-center text-slate-500 font-bold mb-10">技术栈和开发平台</h2>
     <div class="flex gap-8 md:gap-20 items-center justify-center flex-wrap">
       <a href="https://nuxt.com" target="_blank" rel="noopener noreferrer"
         class="group relative flex flex-col items-center">

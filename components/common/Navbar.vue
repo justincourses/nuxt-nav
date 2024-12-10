@@ -5,12 +5,12 @@ const menuitems = [
     path: "/",
   },
   {
-    title: "Courses",
-    path: "/courses",
-  },
-  {
     title: "Partners",
     path: "/partner",
+  },
+  {
+    title: "Contact",
+    path: "/contact",
   },
 ];
 
