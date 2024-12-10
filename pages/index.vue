@@ -12,7 +12,6 @@ usePageTitle(undefined, '从零开始学习 Web 开发，掌握前端技术栈�
     <LandingFeatures />
     <LandingLogos />
     <LandingCta />
-    <LandingShowcase />
     <LandingPartner />
   </div>
 </template>

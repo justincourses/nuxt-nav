@@ -55,12 +55,6 @@ const contactInfo = [
       },
       {
         icon: "mdi:wechat",
-        text: "免费微信群：查看二维码",
-        link: "/contact/qr-free",
-        emoji: "🐧",
-      },
-      {
-        icon: "mdi:wechat",
         text: "付费会员微信群：加好友确认付款后拉入群",
         emoji: "💵",
       },
