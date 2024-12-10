@@ -8,11 +8,9 @@ usePageTitle(undefined, '从零开始学习 Web 开发，掌握前端技术栈�
 
 <template>
   <div class="index-page">
-    <LandingHero />
-    <LandingFeatures />
+    <LandingBanner />
+    <LandingResources />
     <LandingLogos />
-    <LandingCta />
-    <LandingShowcase />
     <LandingPartner />
   </div>
 </template>

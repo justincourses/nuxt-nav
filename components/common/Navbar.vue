@@ -1,23 +1,15 @@
 <script setup>
 const menuitems = [
   {
-    title: "特点 Features",
+    title: "Resources",
     path: "/",
   },
   {
-    title: "价格 Pricing",
-    path: "/pricing",
+    title: "Partners",
+    path: "/partner",
   },
   {
-    title: "故事 Story",
-    path: "/about",
-  },
-  {
-    title: "问答 FAQ",
-    path: "/faq",
-  },
-  {
-    title: "联系 Contact",
+    title: "Contact",
     path: "/contact",
   },
 ];
@@ -46,7 +38,7 @@ const isDarkMode = computed(() => {
         <div class="flex w-full lg:w-auto items-center justify-between">
           <NuxtLink to="/" class="text-lg">
             <span class="font-bold text-slate-800 dark:text-slate-100">Justin</span><span
-              class="text-slate-500 dark:text-slate-400">Course</span>
+              class="text-slate-500 dark:text-slate-400">Course</span><sup class="text-xs text-slate-500 dark:text-slate-400">Navigator</sup>
           </NuxtLink>
           <div class="block lg:hidden">
             <button @click="open = !open" class="text-gray-800 dark:text-gray-200">
@@ -87,7 +79,7 @@ const isDarkMode = computed(() => {
               class="pt-1.5 text-gray-500 dark:text-slate-600 hover:text-gray-700 dark:hover:text-gray-400">
               <Icon name="ph:lightbulb-filament-bold" class="h-5 w-5" />
             </button>
-            <NuxtLink to="https://s.zhaikr.com/web-course-1" target="_blank" rel="noopener"
+            <NuxtLink to="" target="_blank" rel="noopener"
               class="hover:text-gray-500 dark:hover:text-gray-300 transition-colors duration-300">进入课程</NuxtLink>
             <LandingLink href="https://buy.stripe.com/fZe9AW506dnr3IY6oq?prefilled_promo_code=XMAS2024" size="md"
               styleName="primary" target="_blank" rel="noopener" className="transition-colors duration-300">立即加入

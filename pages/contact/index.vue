@@ -55,12 +55,6 @@ const contactInfo = [
       },
       {
         icon: "mdi:wechat",
-        text: "免费微信群：查看二维码",
-        link: "/contact/qr-free",
-        emoji: "🐧",
-      },
-      {
-        icon: "mdi:wechat",
         text: "付费会员微信群：加好友确认付款后拉入群",
         emoji: "💵",
       },
@@ -83,10 +77,6 @@ const contactInfo = [
         class="border border-slate-300 hover:border-slate-400 dark:border-slate-600 dark:hover:border-slate-500 text-slate-700 dark:text-slate-300 py-2 px-4 rounded-md transition-colors duration-300">
         问题咨询与反馈
       </a>
-      <NuxtLink to="/faq"
-        class="border border-slate-300 hover:border-slate-400 dark:border-slate-600 dark:hover:border-slate-500 text-slate-700 dark:text-slate-300 py-2 px-4 rounded-md transition-colors duration-300">
-        常见问答
-      </NuxtLink>
       <a href="https://s.zhaikr.com/c-aff" target="_blank"
         class="border border-slate-300 hover:border-slate-400 dark:border-slate-600 dark:hover:border-slate-500 text-slate-700 dark:text-slate-300 py-2 px-4 rounded-md transition-colors duration-300">
         推荐计划

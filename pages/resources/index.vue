@@ -1,9 +1,9 @@
 <template>
   <div class="max-w-4xl mx-auto pt-8">
-    <div class="text-center mb-12">
-      <h1 class="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">学员作品</h1>
-      <p class="text-lg text-gray-600 dark:text-gray-400">展示我们优秀学员的项目作品和实践成果</p>
-    </div>
+    <CommonSectionhead class="mb-12">
+      <template v-slot:title>合作伙伴</template>
+      <template v-slot:desc>我们与众多优秀的企业和组织建立了长期稳定的合作关系，共同为用户提供更好的服务</template>
+    </CommonSectionhead>
 
     <masonry-wall
       :items="displayedItems"
@@ -16,18 +16,25 @@
       <template #default="{ item }">
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden mb-6">
           <div class="relative w-full aspect-square">
-            <NuxtLink :to="item.url">
-              <img :src="item.image" :alt="item.title" class="w-full h-full object-cover" />
-            </NuxtLink>
+            <img :src="item.image" :alt="item.title" class="w-full h-full object-cover" />
           </div>
 
           <div class="p-4">
+            <div class="flex items-center gap-2 mb-3">
+              <NuxtLink :to="item.url" class="text-xl font-bold hover:text-sky-600 dark:hover:text-sky-400">
+                {{ item.title }}
+              </NuxtLink>
+            </div>
+
             <p class="text-gray-600 dark:text-gray-400 line-clamp-2">
-              <small>
-                <a :href="item.siteurl" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-gray-400 hover:text-sky-600 dark:hover:text-sky-400 transition-colors underline">
-                {{ item.category }} site</a> by
-                <span class="text-sky-600 dark:text-sky-400">@{{ item.author }}</span>
-              </small>
+              {{ item.summary }}
+            </p>
+
+            <p class="text-gray-600 dark:text-gray-400 line-clamp-2 mt-2">
+              <span
+                class="text-sm rounded-full border border-sky-100 bg-sky-50 px-2 py-0.5 text-sky-600 dark:text-sky-300 dark:border-sky-500/15 dark:bg-sky-500/10">
+                {{ item.category }}
+              </span>
             </p>
           </div>
         </div>
@@ -38,11 +45,11 @@
 
 <script setup lang="ts">
 definePageMeta({
-  layout: 'showcase',
+  layout: 'resources',
   ssr: false
 })
 
-usePageTitle('学员作品展示', '展示我们优秀学员的项目作品和实践成果，见证学习效果和技能提升');
+usePageTitle('合作伙伴', '展示我们的合作伙伴和他们的成功案例，了解如何通过合作实现共赢');
 
 const itemsPerPage = 6
 const displayedItems = ref<any[]>([])
@@ -84,8 +91,8 @@ const handleAppend = () => {
 }
 
 // 使用 queryContent 直接获取数据
-const { data } = await useAsyncData('showcases', () =>
-  queryContent('showcase').find()
+const { data } = await useAsyncData('resources', () =>
+  queryContent('resources').find()
 )
 
 // 监听数据变化

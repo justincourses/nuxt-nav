@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { data: partners } = await useAsyncData('partners', () => queryContent('partner')
+const { data: rsources } = await useAsyncData('rsources', () => queryContent('resources')
   .find()
 )
 </script>
@@ -7,14 +7,14 @@ const { data: partners } = await useAsyncData('partners', () => queryContent('pa
 <template>
   <div class="partner-section my-16">
     <h2 class="text-2xl font-bold text-slate-500 hover:text-slate-600 dark:hover:text-sky-400 transition-colors text-center"
-      title="查看更多合作伙伴">
-      <NuxtLink to="/partner">
-        合作伙伴
+      title="查看更多学习资源">
+      <NuxtLink to="/resources">
+        学习资源
       </NuxtLink>
     </h2>
     <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
       <a
-        v-for="partner in partners"
+        v-for="partner in rsources"
         :key="partner._id"
         :href="partner.ref"
         :title="partner.summary"
