@@ -38,7 +38,8 @@ const isDarkMode = computed(() => {
         <div class="flex w-full lg:w-auto items-center justify-between">
           <NuxtLink to="/" class="text-lg">
             <span class="font-bold text-slate-800 dark:text-slate-100">Justin</span><span
-              class="text-slate-500 dark:text-slate-400">Course</span><sup class="text-xs text-slate-500 dark:text-slate-400">Navigator</sup>
+              class="text-slate-500 dark:text-slate-400">Course</span><sup
+              class="text-xs text-slate-500 dark:text-slate-400">Navigator</sup>
           </NuxtLink>
           <div class="block lg:hidden">
             <button @click="open = !open" class="text-gray-800 dark:text-gray-200">
@@ -79,7 +80,7 @@ const isDarkMode = computed(() => {
               class="pt-1.5 text-gray-500 dark:text-slate-600 hover:text-gray-700 dark:hover:text-gray-400">
               <Icon name="ph:lightbulb-filament-bold" class="h-5 w-5" />
             </button>
-            <NuxtLink to="" target="_blank" rel="noopener"
+            <NuxtLink to="https://s.zhaikr.com/web-course-1" target="_blank" rel="noopener"
               class="hover:text-gray-500 dark:hover:text-gray-300 transition-colors duration-300">进入课程</NuxtLink>
             <LandingLink href="https://buy.stripe.com/fZe9AW506dnr3IY6oq?prefilled_promo_code=XMAS2024" size="md"
               styleName="primary" target="_blank" rel="noopener" className="transition-colors duration-300">立即加入
@@ -128,9 +129,8 @@ const isDarkMode = computed(() => {
             </li>
           </ul>
           <div class="flex items-center mt-3 gap-4">
-            <LandingLink href="https://s.zhaikr.com/web-course-1" size="md" :block="true"
-              styleName="muted" target="_blank" rel="noopener"
-              className="hover:text-gray-500 transition-colors duration-300">进入课程
+            <LandingLink href="https://s.zhaikr.com/web-course-1" size="md" :block="true" styleName="muted"
+              target="_blank" rel="noopener" className="hover:text-gray-500 transition-colors duration-300">进入课程
             </LandingLink>
             <LandingLink href="https://buy.stripe.com/fZe9AW506dnr3IY6oq?prefilled_promo_code=XMAS2024" size="md"
               :block="true" styleName="primary" target="_blank" rel="noopener"
