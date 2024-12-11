@@ -25,7 +25,10 @@ const { data: rsources } = await useAsyncData('rsources', () => queryContent('re
             <Icon :name="resource.icon?.toLowerCase()" class="w-full h-full" />
           </div>
           <div>
-            <h3 class="text-gray-800 dark:text-gray-200 text-xl font-semibold mb-3">{{ resource.title }}</h3>
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="text-indigo-600 dark:text-sky-400 text-xl font-semibold drop-shadow-[0_0_8px_rgba(99,102,241,0.3)] dark:drop-shadow-[0_0_8px_rgba(56,189,248,0.3)] hover:text-purple-600 dark:hover:text-purple-400 transition-colors">{{ resource.title }}</h3>
+              <span class="text-xs text-emerald-500 dark:text-emerald-400 mr-2 drop-shadow-[0_0_6px_rgba(16,185,129,0.3)] dark:drop-shadow-[0_0_6px_rgba(52,211,153,0.3)]">{{ resource.category }}</span>
+            </div>
             <p class="text-gray-600 dark:text-gray-400 text-sm">{{ resource.summary }}</p>
           </div>
         </a>
