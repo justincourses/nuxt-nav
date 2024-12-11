@@ -3,6 +3,7 @@ title: Pinia
 summary: Vue 的官方状态管理库，支持 TypeScript、DevTools 集成和服务端渲染
 url: /resources/pinia
 image: /images/resources/pinia.png
+icon: logos:pinia
 tags:
   - Vue
   - 状态管理

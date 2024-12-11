@@ -3,6 +3,7 @@ title: HTML
 summary: 网页标记语言的基础，用于构建和呈现 Web 内容
 url: /resources/html
 image: /images/resources/html.png
+icon: logos:html-5
 tags:
   - HTML
   - Web

@@ -3,6 +3,7 @@ title: Tailwind CSS
 summary: 功能类优先的 CSS 框架，用于快速构建现代网站，无需离开 HTML
 url: /resources/tailwind
 image: /images/resources/tailwind.png
+icon: logos:tailwindcss-icon
 tags:
   - CSS
   - 框架

@@ -3,6 +3,7 @@ title: Node.js
 summary: 基于 Chrome V8 引擎的 JavaScript 运行时，用于构建快速、可扩展的网络应用
 url: /resources/nodejs
 image: /images/resources/nodejs.png
+icon: logos:nodejs-icon
 tags:
   - Node.js
   - JavaScript

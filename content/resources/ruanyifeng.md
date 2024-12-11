@@ -3,6 +3,7 @@ title: 阮一峰的网络日志
 summary: 关注 JavaScript 语言、Web 开发、技术趋势和互联网文化
 url: /resources/ruanyifeng
 image: /images/resources/ruanyifeng.png
+icon: mdi:book-open-page-variant
 tags:
   - 博客
   - JavaScript

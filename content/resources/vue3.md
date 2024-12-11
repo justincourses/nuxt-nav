@@ -3,6 +3,7 @@ title: Vue3
 summary: 渐进式 JavaScript 框架，用于构建现代化的用户界面
 url: /resources/vue3
 image: /images/resources/vue3.png
+icon: logos:vue
 tags:
   - 前端
   - 框架

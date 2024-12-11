@@ -1,0 +1,74 @@
+[
+  {
+    "filename": "git.png",
+    "prompt": "A minimalist illustration of branching tree structure representing Git version control system, using simple lines and geometric shapes"
+  },
+  {
+    "filename": "github.png",
+    "prompt": "A modern flat design of the GitHub mascot (Octocat) in a developer workspace setting, with subtle coding elements"
+  },
+  {
+    "filename": "copilot.png",
+    "prompt": "An abstract representation of AI pair programming, showing two intertwined glowing code streams in blue and purple"
+  },
+  {
+    "filename": "cursor.png",
+    "prompt": "A sleek, modern text cursor icon with AI-powered features represented by subtle neural network patterns"
+  },
+  {
+    "filename": "html.png",
+    "prompt": "A clean, modern representation of HTML5 markup structure, using orange and white geometric shapes"
+  },
+  {
+    "filename": "css.png",
+    "prompt": "Cascading style sheets visualized through overlapping layers with CSS color gradients and design elements"
+  },
+  {
+    "filename": "javascript.png",
+    "prompt": "Dynamic JavaScript code elements floating in space, with yellow and dark grey color scheme"
+  },
+  {
+    "filename": "typescript.png",
+    "prompt": "TypeScript blue themed abstract composition with type definitions and interfaces represented geometrically"
+  },
+  {
+    "filename": "nodejs.png",
+    "prompt": "Node.js green hexagonal pattern with server-side JavaScript symbols in a modern tech style"
+  },
+  {
+    "filename": "tailwind.png",
+    "prompt": "Abstract waves in Tailwind's signature blue color palette, representing utility-first CSS"
+  },
+  {
+    "filename": "nuxt.png",
+    "prompt": "A modern interpretation of Nuxt.js logo with green geometric patterns showing a progressive web app structure"
+  },
+  {
+    "filename": "vue3.png",
+    "prompt": "Vue 3 composition API represented through interconnected green components in a minimal style"
+  },
+  {
+    "filename": "pinia.png",
+    "prompt": "Pinia state management visualized through connected yellow pine cone inspired patterns"
+  },
+  {
+    "filename": "iterm2.png",
+    "prompt": "Modern terminal interface design with coding elements and command line features in dark mode"
+  },
+  {
+    "filename": "powershell.png",
+    "prompt": "PowerShell command line interface with blue wave patterns and shell scripting elements"
+  },
+  {
+    "filename": "ruanyifeng.png",
+    "prompt": "A minimalist desk setup with coding books and a laptop showing JavaScript code"
+  },
+  {
+    "filename": "zhangxinxu.png",
+    "prompt": "A creative composition showing CSS styling elements and web design components in a grid layout"
+  },
+  {
+    "filename": "resources.png",
+    "prompt": "A collection of web development tools and resources arranged in an organized grid pattern"
+  }
+]

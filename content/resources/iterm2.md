@@ -3,6 +3,7 @@ title: iTerm2
 summary: macOS 上强大的终端模拟器，提供丰富的功能和可定制性
 url: /resources/iterm2
 image: /images/resources/iterm2.png
+icon: simple-icons:iterm2
 tags:
   - 终端
   - macOS

@@ -3,6 +3,7 @@ title: VSCode
 summary: 功能强大的代码编辑器，支持多种编程语言与插件扩展
 url: /resources/vscode
 image: /images/resources/vscode.png
+icon: logos:visual-studio-code
 tags:
   - 编辑器
   - 开发工具
@@ -47,7 +48,7 @@ Visual Studio Code (VSCode) 是由微软开发的免费、开源代码编辑器�
 
 4. 协作特性
    - Live Share
-   - 源代码���理
+   - 源代码管理
    - 任务运行系统
    - 问题追踪
    - 设置同步

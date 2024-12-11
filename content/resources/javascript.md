@@ -3,6 +3,7 @@ title: JavaScript
 summary: 强大的脚本语言，为网页提供交互性和动态功能
 url: /resources/javascript
 image: /images/resources/javascript.png
+icon: logos:javascript
 tags:
   - JavaScript
   - Web
@@ -45,7 +46,7 @@ JavaScript 是一种动态类型、解释型的编程语言，它是现代 Web �
    - 动画效果
    - 表单验证
    - 状态管理
-   - API���成
+   - API生成
 
 4. 工具生态
    - 包管理器

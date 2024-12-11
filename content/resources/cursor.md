@@ -3,6 +3,7 @@ title: Cursor
 summary: 集成 AI 的新一代代码编辑器，提供智能代码补全和生成功能
 url: /resources/cursor
 image: /images/resources/cursor.png
+icon: ph:cursor-text-bold
 tags:
   - 编辑器
   - AI
@@ -48,7 +49,7 @@ Cursor 是新一代的智能代码编辑器，它通过集成先进的 AI 技术
 
 4. 性能优化
    - 快速启动
-   - 内存优���
+   - 内存优化
    - 大文件处理
    - 后台分析
    - 实时响应

@@ -1,8 +1,8 @@
 <template>
   <div class="max-w-4xl mx-auto pt-8">
     <CommonSectionhead class="mb-12">
-      <template v-slot:title>合作伙伴</template>
-      <template v-slot:desc>我们与众多优秀的企业和组织建立了长期稳定的合作关系，共同为用户提供更好的服务</template>
+      <template v-slot:title>学习资源</template>
+      <template v-slot:desc>精选优质的学习资源和开发工具，帮助开发者提升技能、提高效率，打造更好的开发体验</template>
     </CommonSectionhead>
 
     <masonry-wall

@@ -3,6 +3,7 @@ title: GitHub Copilot
 summary: AI 驱动的代码助手，提供智能代码补全和生成建议
 url: /resources/copilot
 image: /images/resources/copilot.png
+icon: simple-icons:githubcopilot
 tags:
   - AI
   - 开发工具
@@ -46,7 +47,7 @@ GitHub Copilot 是由 GitHub 和 OpenAI 合作开发的 AI 编程助手，它能
    - PHP
    - C++/C#
 
-4. 安全特���
+4. 安全特性
    - 代码过滤
    - 隐私保护
    - 许可证检查
