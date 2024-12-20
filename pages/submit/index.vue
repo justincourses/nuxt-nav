@@ -46,28 +46,32 @@
         </div>
 
         <form class="sm:col-span-2 space-y-4" @submit.prevent="handleSubmit">
-          <div class="relative">
-            <input type='email' placeholder='邮箱地址 *' v-model="form.email" :class="[
+          <div class="space-y-1">
+            <input type='email' placeholder='邮箱地址 *' v-model="form.email"
+              :class="[
                 'w-full text-slate-800 rounded-md py-2.5 px-4 border-slate-300 border text-sm outline-blue-500',
                 errors.email ? 'border-red-500' : ''
-              ]" required />
-            <span v-if="errors.email" class="text-red-500 text-xs absolute -bottom-5">{{ errors.email }}</span>
+              ]"
+              required />
+            <span v-if="errors.email" class="text-red-500 text-xs block">{{ errors.email }}</span>
           </div>
-          <div class="relative">
-            <input type='url' placeholder='资源链接 *' v-model="form.resourceUrl" :class="[
+          <div class="space-y-1">
+            <input type='url' placeholder='资源链接 *' v-model="form.resourceUrl"
+              :class="[
                 'w-full text-slate-800 rounded-md py-2.5 px-4 border-slate-300 border text-sm outline-blue-500',
                 errors.resourceUrl ? 'border-red-500' : ''
-              ]" required />
-            <span v-if="errors.resourceUrl" class="text-red-500 text-xs absolute -bottom-5">{{ errors.resourceUrl
-              }}</span>
+              ]"
+              required />
+            <span v-if="errors.resourceUrl" class="text-red-500 text-xs block">{{ errors.resourceUrl }}</span>
           </div>
-          <div class="relative">
-            <textarea placeholder='资源介绍 *' rows="6" v-model="form.description" :class="[
+          <div class="space-y-1">
+            <textarea placeholder='资源介绍 *' rows="6" v-model="form.description"
+              :class="[
                 'w-full text-slate-800 rounded-md px-4 border-slate-300 border text-sm pt-2.5 outline-blue-500',
                 errors.description ? 'border-red-500' : ''
-              ]" required></textarea>
-            <span v-if="errors.description" class="text-red-500 text-xs absolute -bottom-5">{{ errors.description
-              }}</span>
+              ]"
+              required></textarea>
+            <span v-if="errors.description" class="text-red-500 text-xs block">{{ errors.description }}</span>
           </div>
           <input type='text' placeholder='社交媒体 ID' v-model="form.socialId"
             class="w-full text-slate-800 rounded-md py-2.5 px-4 border-slate-300 border text-sm outline-blue-500" />
@@ -91,23 +95,18 @@
 </template>
 
 <script setup lang="ts">
+import { validateForm, type FormData, type FormErrors } from '~/utils/validation';
+import { useToast } from '~/composables/useToast';
+
 definePageMeta({
   layout: "submit",
 });
 
 usePageTitle('推荐资源', '推荐优质的Web开发学习资源');
 
-interface FormData {
-  socialId: string;
-  email: string;
-  resourceUrl: string;
-  description: string;
-}
-
-interface FormErrors {
-  email?: string;
-  resourceUrl?: string;
-  description?: string;
+interface SubmitResponse {
+  success: boolean;
+  message: string;
 }
 
 const form = ref<FormData>({
@@ -119,59 +118,26 @@ const form = ref<FormData>({
 
 const errors = ref<FormErrors>({});
 const isSubmitting = ref(false);
-
-const validateForm = (): boolean => {
-  errors.value = {};
-  let isValid = true;
-
-  if (!form.value.email) {
-    errors.value.email = '请输入邮箱地址';
-    isValid = false;
-  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.value.email)) {
-    errors.value.email = '请输入有效的邮箱地址';
-    isValid = false;
-  }
-
-  if (!form.value.resourceUrl) {
-    errors.value.resourceUrl = '请输入资源链接';
-    isValid = false;
-  } else {
-    try {
-      new URL(form.value.resourceUrl);
-    } catch {
-      errors.value.resourceUrl = '请输入有效的URL';
-      isValid = false;
-    }
-  }
-
-  if (!form.value.description) {
-    errors.value.description = '请输入资源介绍';
-    isValid = false;
-  } else if (form.value.description.length < 10) {
-    errors.value.description = '资源介绍至少需要10个字符';
-    isValid = false;
-  }
-
-  return isValid;
-};
-
-const mockSubmitToAPI = async (data: FormData): Promise<{ success: boolean }> => {
-  // 模拟 API 请求延迟
-  await new Promise(resolve => setTimeout(resolve, 1500));
-  return { success: true };
-};
+const { showToast } = useToast();
 
 const handleSubmit = async () => {
-  if (!validateForm()) return;
-
   try {
     isSubmitting.value = true;
-    const response = await mockSubmitToAPI(form.value);
+
+    // 前端验证
+    errors.value = validateForm(form.value);
+    if (Object.keys(errors.value).length > 0) {
+      showToast('请检查表单填写是否正确', 'warning');
+      return;
+    }
+
+    const response = await $fetch<SubmitResponse>('/api/submit', {
+      method: 'POST',
+      body: form.value
+    });
 
     if (response.success) {
-      // 使用 Nuxt 的 toast 通知（需要安装相应的插件）
-      // 这里暂时用 alert 代替
-      alert('提交成功！感谢您的推荐');
+      showToast(response.message || '提交成功！感谢您的推荐', 'success');
       // 重置表单
       form.value = {
         socialId: '',
@@ -180,9 +146,19 @@ const handleSubmit = async () => {
         description: ''
       };
     }
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error submitting form:', error);
-    alert('提交失败，请稍后重试');
+    if (error.statusCode === 400 && error.data) {
+      // 处理验证错误
+      errors.value = error.data;
+      showToast('请检查表单填写是否正确', 'warning');
+    } else if (error.statusCode === 500) {
+      // 处理其他错误
+      showToast('服务器错误，请稍后重试', 'error');
+    } else {
+      // 处理其他类型的错误
+      showToast(error.message || '提交失败，请稍后重试', 'error');
+    }
   } finally {
     isSubmitting.value = false;
   }
