@@ -100,7 +100,22 @@ export default defineEventHandler(async (event) => {
         code: emailError.statusCode,
         details: emailError.details
       });
-      throw new Error('Failed to send email notification');
+
+      // 返回详细的错误信息
+      return createError({
+        statusCode: 500,
+        statusMessage: 'Email Sending Error',
+        data: {
+          errorMessage: emailError.message,
+          errorCode: emailError.statusCode,
+          errorDetails: emailError.details,
+          emailConfig: {
+            from: fromEmail,
+            to: toEmail,
+            hasApiKey: !!resendApiKey
+          }
+        }
+      });
     }
 
     // 返回成功响应
@@ -115,9 +130,16 @@ export default defineEventHandler(async (event) => {
       name: error.name
     });
 
+    // 返回通用错误的详细信息
     return createError({
       statusCode: 500,
       statusMessage: 'Internal Server Error',
+      data: {
+        errorType: error.name,
+        errorMessage: error.message,
+        // 在生产环境中可能需要移除堆栈信息
+        errorStack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+      },
       message: '提交失败，请稍后重试'
     });
   }
