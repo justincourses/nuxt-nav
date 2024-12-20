@@ -11,14 +11,7 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: [
-    "nuxt-icon",
-    "@nuxt/ui",
-    "@nuxt/content",
-    "@nuxt/image",
-    "@nuxtjs/color-mode",
-    "@nuxtjs/sitemap",
-  ],
+  modules: ["nuxt-icon", "@nuxt/ui", "@nuxt/content", "@nuxt/image", "@nuxtjs/color-mode", "@nuxtjs/sitemap", "nuxt-resend"],
 
   app: {
     head: {

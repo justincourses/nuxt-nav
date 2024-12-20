@@ -11,7 +11,7 @@ const handleGetOffer = () => {
 </script>
 
 <template>
-  <div v-if="isVisible" class="flex items-center max-md:flex-col gap-6 bg-gradient-to-tr from-blue-700 to-purple-400 text-white px-6 py-3.5 rounded font-[sans-serif]">
+  <div v-if="isVisible" class="flex items-center max-md:flex-col gap-6 bg-gradient-to-tr from-blue-700 to-purple-400 text-white px-6 py-3.5 mt-4 rounded font-[sans-serif]">
     <p class="text-base flex-1 max-md:text-center">Celebrate the holiday season with our special Christmas offer! Get 50% off on all courses - the perfect gift for learning and growth. Don't miss this festive discount!</p>
 
     <div>
