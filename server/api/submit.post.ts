@@ -1,3 +1,47 @@
+/**
+ * POST /api/submit
+ *
+ * Handles form submission for learning resource recommendations.
+ *
+ * @description
+ * This endpoint processes form submissions for learning resource recommendations.
+ * It validates the input data, sends an email notification, and returns appropriate responses.
+ *
+ * @example
+ * ```ts
+ * // Request body structure (FormData)
+ * {
+ *   email: string;       // Required - Submitter's email
+ *   resourceUrl: string; // Required - URL of the learning resource
+ *   description: string; // Required - Description of the resource
+ *   socialId?: string;   // Optional - Social media handle
+ * }
+ *
+ * // Success Response (200)
+ * {
+ *   success: true,
+ *   message: string
+ * }
+ *
+ * // Validation Error Response (400)
+ * {
+ *   statusCode: 400,
+ *   statusMessage: 'Validation Error',
+ *   data: Record<string, string> // Field-specific error messages
+ * }
+ *
+ * // Server Error Response (500)
+ * {
+ *   statusCode: 500,
+ *   statusMessage: 'Internal Server Error',
+ *   message: string
+ * }
+ * ```
+ *
+ * @requires NUXT_RESEND_FROM_EMAIL - Environment variable for sender email
+ * @requires NUXT_RESEND_TO_EMAIL - Environment variable for recipient email
+ */
+
 import { validateForm, type FormData } from '~/utils/validation';
 
 export default defineEventHandler(async (event) => {
@@ -17,11 +61,23 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // 模拟处理延迟
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    // 获取 Resend 实例
+    const { emails } = useResend();
 
-    // TODO: 这里可以添加实际的数据存储逻辑
-    console.log('Received form submission:', body);
+    // 发送邮件通知
+    await emails.send({
+      from: process.env.NUXT_RESEND_FROM_EMAIL!,
+      to: [process.env.NUXT_RESEND_TO_EMAIL!],
+      subject: "新的学习资源推荐",
+      text: `
+新的学习资源推荐：
+
+提交者邮箱：${body.email}
+资源链接：${body.resourceUrl}
+资源介绍：${body.description}
+社交媒体：${body.socialId || "未提供"}
+      `.trim(),
+    });
 
     // 返回成功响应
     return {

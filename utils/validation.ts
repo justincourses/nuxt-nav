@@ -35,8 +35,8 @@ export const validateForm = (data: FormData): FormErrors => {
   // 验证资源介绍
   if (!data.description) {
     errors.description = '请输入资源介绍';
-  } else if (data.description.length < 10) {
-    errors.description = '资源介绍至少需要10个字符';
+  } else if (data.description.length < 0) {
+    errors.description = '资源介绍至少需要1个字符';
   }
 
   return errors;
