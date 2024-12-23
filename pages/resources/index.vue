@@ -115,6 +115,9 @@ import { useDebounceFn } from '@vueuse/core'
 
 usePageTitle('合作伙伴', '展示我们的合作伙伴和他们的成功案例，了解如何通过合作实现共赢');
 
+const route = useRoute()
+const router = useRouter()
+
 const itemsPerPage = 6
 const displayedItems = ref<any[]>([])
 const listData = ref<any[]>([])
@@ -133,6 +136,54 @@ const formState = reactive({
   category: selectedCategory,
   tags: selectedTags
 })
+
+// Update URL when filter changes
+const updateUrlQuery = () => {
+  const query: Record<string, string | string[]> = {}
+
+  if (searchKeyword.value) {
+    query.keyword = searchKeyword.value
+  }
+
+  if (selectedCategory.value) {
+    query.category = selectedCategory.value
+  }
+
+  if (selectedTags.value.length > 0) {
+    query.tags = selectedTags.value
+  }
+
+  // Replace URL without triggering a page reload
+  router.replace({ query })
+}
+
+// Watch for filter changes and update URL
+watch([searchKeyword, selectedCategory, selectedTags], () => {
+  updateUrlQuery()
+}, { deep: true })
+
+// Define handleAppend first
+const handleAppend = () => {
+  if (currentIndex.value >= listData.value.length) return
+
+  const nextItems = listData.value.slice(
+    currentIndex.value,
+    currentIndex.value + itemsPerPage
+  )
+  displayedItems.value = [...displayedItems.value, ...nextItems]
+  currentIndex.value += itemsPerPage
+}
+
+// Scroll handler
+const handleScroll = () => {
+  const scrollHeight = document.documentElement.scrollHeight
+  const scrollTop = window.scrollY || document.documentElement.scrollTop
+  const clientHeight = window.innerHeight || document.documentElement.clientHeight
+
+  if (scrollHeight - scrollTop <= clientHeight + 100) {
+    handleAppend()
+  }
+}
 
 // Debounced search function
 const handleSearch = useDebounceFn(async () => {
@@ -176,73 +227,80 @@ const handleSearch = useDebounceFn(async () => {
   }
 }, 300)
 
-// 添加滚动监听
-const handleScroll = () => {
-  const scrollHeight = document.documentElement.scrollHeight
-  const scrollTop = window.scrollY || document.documentElement.scrollTop
-  const clientHeight = window.innerHeight || document.documentElement.clientHeight
-
-  if (scrollHeight - scrollTop <= clientHeight + 100) {
-    handleAppend()
-  }
-}
-
-const handleAppend = () => {
-  if (currentIndex.value >= listData.value.length) return
-
-  const nextItems = listData.value.slice(
-    currentIndex.value,
-    currentIndex.value + itemsPerPage
-  )
-  displayedItems.value = [...displayedItems.value, ...nextItems]
-  currentIndex.value += itemsPerPage
-}
-
 // Reset function
 const handleReset = async () => {
   searchKeyword.value = ''
   selectedCategory.value = ''
   selectedTags.value = []
 
-  // Fetch all data again when resetting
-  const { data: allData } = await useAsyncData('reset-resources', () => queryContent('resources').find())
-  if (allData.value) {
-    listData.value = [...allData.value]
+  // Use initial data for reset
+  if (initialData.value) {
+    listData.value = [...initialData.value]
     displayedItems.value = []
     currentIndex.value = 0
     handleAppend()
   }
 }
 
-// Initial data fetch and filter options setup
-const initializeData = async () => {
-  // First fetch all data to extract categories and tags
-  const { data: allData } = await useAsyncData('all-resources', () => queryContent('resources').find())
+// Fetch and process initial data
+const { data: initialData } = await useAsyncData('initial-resources', () =>
+  queryContent('resources').find()
+)
 
-  if (allData.value && allData.value.length > 0) {
-    // Extract unique categories and tags
-    const categorySet = new Set<string>()
-    const tagSet = new Set<string>()
+// Initialize categories and tags
+if (initialData.value && initialData.value.length > 0) {
+  const categorySet = new Set<string>()
+  const tagSet = new Set<string>()
 
-    allData.value.forEach((item: any) => {
-      if (item.category) categorySet.add(item.category)
-      if (item.tags) item.tags.forEach((tag: string) => tagSet.add(tag))
-    })
+  initialData.value.forEach((item: any) => {
+    if (item.category) categorySet.add(item.category)
+    if (item.tags) item.tags.forEach((tag: string) => tagSet.add(tag))
+  })
 
-    categories.value = Array.from(categorySet).sort()
-    tags.value = Array.from(tagSet).sort()
+  categories.value = Array.from(categorySet).sort()
+  tags.value = Array.from(tagSet).sort()
 
-    // Set initial data
-    listData.value = [...allData.value]
-    displayedItems.value = [] // Clear displayed items
-    currentIndex.value = 0 // Reset index
-    handleAppend() // Load initial items
+  // Set initial data
+  listData.value = [...initialData.value]
+
+  // Apply URL query parameters if they exist
+  const { keyword, category, tags: urlTags } = route.query
+
+  if (keyword && typeof keyword === 'string') {
+    searchKeyword.value = keyword
+  }
+
+  if (category && typeof category === 'string') {
+    selectedCategory.value = category
+  }
+
+  if (urlTags) {
+    // Handle both single tag and array of tags
+    const tagArray = Array.isArray(urlTags)
+      ? urlTags.filter((tag): tag is string => typeof tag === 'string')
+      : typeof urlTags === 'string'
+        ? [urlTags]
+        : []
+
+    // Only set tags that actually exist in our tag list
+    selectedTags.value = tagArray.filter(tag => tags.value.includes(tag))
+  }
+
+  // If any filters were applied from URL, trigger search
+  if (keyword || category || urlTags) {
+    handleSearch()
   }
 }
 
-// Initialize data and setup scroll listener
+// Load initial items
+watchEffect(() => {
+  if (listData.value.length > 0 && displayedItems.value.length === 0) {
+    handleAppend()
+  }
+})
+
+// Setup scroll listener
 onMounted(() => {
-  initializeData()
   window.addEventListener('scroll', handleScroll)
 })
 
