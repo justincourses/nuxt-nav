@@ -193,29 +193,27 @@ const handleSearch = useDebounceFn(async () => {
   let query = queryContent('resources')
   const hasFilters = searchKeyword.value || selectedCategory.value || selectedTags.value.length > 0
 
-  if (hasFilters) {
-    // Apply keyword search
-    if (searchKeyword.value) {
-      query = query.where({
-        $or: [
-          { title: { $icontains: searchKeyword.value } },
-          { summary: { $icontains: searchKeyword.value } },
-          { description: { $icontains: searchKeyword.value } },
-          { body: { $icontains: searchKeyword.value } },
-          { category: { $icontains: searchKeyword.value } }
-        ]
-      })
-    }
+  // Apply filters if any exist
+  if (searchKeyword.value) {
+    query = query.where({
+      $or: [
+        { title: { $icontains: searchKeyword.value } },
+        { summary: { $icontains: searchKeyword.value } },
+        { description: { $icontains: searchKeyword.value } },
+        { body: { $icontains: searchKeyword.value } },
+        { category: { $icontains: searchKeyword.value } }
+      ]
+    })
+  }
 
-    // Apply category filter
-    if (selectedCategory.value) {
-      query = query.where({ category: selectedCategory.value })
-    }
+  // Apply category filter
+  if (selectedCategory.value) {
+    query = query.where({ category: selectedCategory.value })
+  }
 
-    // Apply tags filter
-    if (selectedTags.value.length > 0) {
-      query = query.where({ tags: { $containsAny: selectedTags.value } })
-    }
+  // Apply tags filter
+  if (selectedTags.value.length > 0) {
+    query = query.where({ tags: { $containsAny: selectedTags.value } })
   }
 
   // Execute the query
