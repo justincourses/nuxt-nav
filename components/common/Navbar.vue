@@ -1,8 +1,12 @@
 <script setup>
 const menuitems = [
   {
-    title: "Resources",
+    title: "Home",
     path: "/",
+  },
+  {
+    title: "Resources",
+    path: "/resources",
   },
   {
     title: "Partners",
