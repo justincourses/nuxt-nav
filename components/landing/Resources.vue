@@ -22,6 +22,8 @@ const { data: rsources } = await useAsyncData<Resource[]>('rsources', () => quer
 
 const router = useRouter()
 const searchQuery = ref('')
+const displayCount = 6
+const currentBatch = ref<Resource[]>([])
 
 const filteredResources = computed(() => {
   if (!searchQuery.value || !rsources.value) return rsources.value
@@ -34,21 +36,65 @@ const filteredResources = computed(() => {
   )
 })
 
+// Function to get random items from array
+const getRandomItems = (items: Resource[] | null, count: number): Resource[] => {
+  if (!items) return []
+  const shuffled = [...items].sort(() => 0.5 - Math.random())
+  return shuffled.slice(0, count)
+}
+
+// Initialize and refresh displayed resources
+const refreshBatch = () => {
+  const items = filteredResources.value
+  if (items) {
+    currentBatch.value = getRandomItems(items, displayCount)
+  }
+}
+
+// Watch for changes in filtered resources
+watch(filteredResources, () => {
+  refreshBatch()
+}, { immediate: true })
+
 const handleSearch = () => {
   if (!searchQuery.value) return
   router.push(`/resources?keyword=${encodeURIComponent(searchQuery.value)}`)
+}
+
+const handleViewMore = () => {
+  router.push('/resources')
 }
 </script>
 
 <template>
   <div class="bg-gray-50 dark:bg-gray-900 px-4 py-12 font-[sans-serif]">
     <div class="max-w-6xl mx-auto">
-      <h2 class="text-2xl font-bold text-slate-500 hover:text-slate-600 dark:hover:text-sky-400 transition-colors text-center mb-8"
-        title="查看更多学习资源">
-        <NuxtLink to="/resources">
-          学习资源
-        </NuxtLink>
-      </h2>
+      <div class="flex items-center justify-between mb-8">
+        <h2 class="text-2xl font-bold text-slate-500 hover:text-slate-600 dark:hover:text-sky-400 transition-colors"
+          title="查看更多学习资源">
+          <NuxtLink to="/resources">
+            学习资源
+          </NuxtLink>
+        </h2>
+        <div class="flex gap-4">
+          <button
+            @click="refreshBatch"
+            class="flex items-center gap-2 text-sm text-indigo-500 hover:text-indigo-600 transition-colors"
+            aria-label="换一批"
+          >
+            <Icon name="i-heroicons-arrow-path-20-solid" class="w-5 h-5" />
+            换一批
+          </button>
+          <button
+            @click="handleViewMore"
+            class="flex items-center gap-2 text-sm text-emerald-500 hover:text-emerald-600 transition-colors"
+            aria-label="查看更多"
+          >
+            <Icon name="i-heroicons-arrow-right-20-solid" class="w-5 h-5" />
+            查看更多
+          </button>
+        </div>
+      </div>
 
       <!-- Search Box -->
       <div class="flex rounded-md border-2 border-blue-500 overflow-hidden max-w-md mx-auto font-[sans-serif] mb-6">
@@ -75,7 +121,7 @@ const handleSearch = () => {
 
       <div class="grid lg:grid-cols-3 md:grid-cols-2 max-md:max-w-lg mx-auto gap-8" v-if="rsources">
         <a
-          v-for="resource in filteredResources"
+          v-for="resource in currentBatch"
           :key="resource._id"
           :href="resource.url"
           :title="resource.summary"
