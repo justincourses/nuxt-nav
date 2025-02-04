@@ -13,41 +13,58 @@ export default defineNuxtConfig({
 
   modules: ["nuxt-icon", "@nuxt/ui", "@nuxt/content", "@nuxt/image", "@nuxtjs/color-mode", "@nuxtjs/sitemap", "nuxt-resend"],
 
+  // Site Configuration
+  site: {
+    url: 'https://nav.justincourse.com',
+    name: 'Web 开发课程资源导航',
+    description: 'Web 开发课程相关的工具、资源、技术和教程的综合性资源导航网站，为开发者提供实用的学习参考'
+  },
+
+  sitemap: {
+    exclude: ['/submit/**'],
+    urls: ['/resources', '/partner', '/about', '/contact'],
+    defaults: {
+      changefreq: 'daily',
+      priority: 0.8,
+      lastmod: new Date().toISOString()
+    }
+  },
+
   app: {
     head: {
-      title: "Web 开发课程资源",
+      title: "Web 开发课程资源导航",
       meta: [
         { charset: "utf-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
         {
           name: "description",
           content:
-            "Web 开发课程相关的工具、资源、技术和教程的综合性资源网站，为开发者提供实用的学习参考",
+            "Web 开发课程相关的工具、资源、技术和教程的综合性资源导航网站，为开发者提供实用的学习参考",
         },
-        { property: "og:url", content: "https://justincourse.com/" },
+        { property: "og:url", content: "https://nav.justincourse.com/" },
         { property: "og:type", content: "website" },
-        { property: "og:title", content: "Web 开发课程资源" },
+        { property: "og:title", content: "Web 开发课程资源导航" },
         {
           property: "og:description",
           content:
-            "Web 开发课程相关的工具、资源、技术和教程的综合性资源网站，为开发者提供实用的学习参考",
+            "Web 开发课程相关的工具、资源、技术和教程的综合性资源导航网站，为开发者提供实用的学习参考",
         },
         {
           property: "og:image",
-          content: "https://justincourse.com/og-image-0.png",
+          content: "https://nav.justincourse.com/og-image-0.png",
         },
         { name: "twitter:card", content: "summary_large_image" },
-        { property: "twitter:domain", content: "justincourse.com" },
-        { property: "twitter:url", content: "https://justincourse.com/" },
-        { name: "twitter:title", content: "Web 开发课程资源" },
+        { property: "twitter:domain", content: "nav.justincourse.com" },
+        { property: "twitter:url", content: "https://nav.justincourse.com/" },
+        { name: "twitter:title", content: "Web 开发课程资源导航" },
         {
           name: "twitter:description",
           content:
-            "Web 开发课程相关的工具、资源、技术和教程的综合性资源网站，为开发者提供实用的学习参考",
+            "Web 开发课程相关的工具、资源、技术和教程的综合性资源导航网站，为开发者提供实用的学习参考",
         },
         {
           name: "twitter:image",
-          content: "https://justincourse.com/og-image-0.png",
+          content: "https://nav.justincourse.com/og-image-0.png",
         },
       ],
       link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
@@ -67,45 +84,6 @@ export default defineNuxtConfig({
   },
 
   compatibilityDate: "2024-11-05",
-
-  site: {
-    url: "https://justincourse.com",
-    name: "Web 开发课程资源",
-    description:
-      "Web 开发课程相关的工具、资源、技术和教程的综合性资源网站，为开发者提供实用的学习参考",
-    defaultLocale: "zh",
-    identity: {
-      type: "Organization",
-      name: "JustinCourse",
-      logo: "https://justincourse.com/og-image-0.png",
-    },
-    twitter: {
-      card: "summary_large_image",
-      site: "@interjc",
-      creator: "@interjc",
-    },
-    trailingSlash: true,
-    indexable: true,
-    robots: {
-      index: true,
-      follow: true,
-    },
-    sitemap: {
-      urls: [],
-      excludeUrls: ["/admin", "/private"],
-      hostname: "https://justincourse.com",
-      gzip: true,
-      xsl: true,
-      lastmod: new Date().toISOString(),
-      changefreq: "weekly",
-      priority: 1.0,
-      defaults: {
-        changefreq: "daily",
-        priority: 0.8,
-        lastmod: new Date().toISOString(),
-      },
-    },
-  },
 
   colorMode: {
     classSuffix: "",
