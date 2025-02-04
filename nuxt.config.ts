@@ -52,17 +52,17 @@ export default defineNuxtConfig({
       ],
       link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
       script: [
-        { src: "/tracking.js" },
         {
-          src: "//cdn.trackdesk.com/tracking.js",
+          src: "https://www.googletagmanager.com/gtag/js?id=G-YLXX3YMC04",
           async: true
         },
         {
-          children: `(function(t,d,k){(t[k]=t[k]||[]).push(d);t[d]=t[d]||t[k].f||function(){(t[d].q=t[d].q||[]).push(arguments)}})(window,"trackdesk","TrackdeskObject");
-          trackdesk('yoko', 'click');`,
-          type: 'text/javascript'
+          children: `window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-YLXX3YMC04');`
         }
-      ],
+      ]
     },
   },
 
