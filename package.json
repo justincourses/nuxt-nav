@@ -10,6 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
+    "@iconify-json/logos": "^1.2.4",
     "@iconify-json/mdi": "^1.2.1",
     "@iconify-json/ph": "^1.2.1",
     "@iconify-json/simple-icons": "^1.2.10",
