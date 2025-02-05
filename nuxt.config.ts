@@ -11,23 +11,36 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: ["nuxt-icon", "@nuxt/ui", "@nuxt/content", "@nuxt/image", "@nuxtjs/color-mode", "@nuxtjs/sitemap", "nuxt-resend"],
+  modules: [
+    "nuxt-icon",
+    "@nuxt/ui",
+    "@nuxtjs/sitemap",
+    "@nuxt/content",
+    "@nuxt/image",
+    "@nuxtjs/color-mode",
+    "nuxt-resend",
+  ],
 
   // Site Configuration
   site: {
-    url: 'https://nav.justincourse.com',
-    name: 'Web 开发课程资源导航',
-    description: 'Web 开发课程相关的工具、资源、技术和教程的综合性资源导航网站，为开发者提供实用的学习参考'
+    url: "https://nav.justincourse.com",
+    name: "Web 开发课程资源导航",
+    description:
+      "Web 开发课程相关的工具、资源、技术和教程的综合性资源导航网站，为开发者提供实用的学习参考",
   },
 
   sitemap: {
-    exclude: ['/submit/**'],
-    urls: ['/resources', '/partner', '/about', '/contact'],
+    exclude: ["/submit/**"],
+    urls: ["/resources", "/partner", "/about", "/contact"],
+    strictNuxtContentPaths: true,
+    sources: [
+      '/api/__sitemap__/urls'
+    ],
     defaults: {
-      changefreq: 'daily',
+      changefreq: "daily",
       priority: 0.8,
-      lastmod: new Date().toISOString()
-    }
+      lastmod: new Date().toISOString(),
+    },
   },
 
   app: {
@@ -71,15 +84,15 @@ export default defineNuxtConfig({
       script: [
         {
           src: "https://www.googletagmanager.com/gtag/js?id=G-YLXX3YMC04",
-          async: true
+          async: true,
         },
         {
           children: `window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', 'G-YLXX3YMC04');`
-        }
-      ]
+          gtag('config', 'G-YLXX3YMC04');`,
+        },
+      ],
     },
   },
 
@@ -94,13 +107,13 @@ export default defineNuxtConfig({
 
   content: {
     highlight: {
-      theme: 'github-dark'
+      theme: "github-dark",
     },
     markdown: {
       toc: {
         depth: 3,
-        searchDepth: 3
-      }
-    }
-  }
+        searchDepth: 3,
+      },
+    },
+  },
 });
