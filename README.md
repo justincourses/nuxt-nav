@@ -26,6 +26,9 @@ npm install
 可以使用以下两种方式之一：
 
 ```bash
+# 启动之前需要安装依赖包
+npm i
+
 # 方式 1：直接启动
 npm run dev
 
@@ -35,19 +38,6 @@ sh dev.sh
 
 开发服务器将在 `http://localhost:3000` 启动。
 
-## 生产环境构建
-
-构建生产环境应用：
-
-```bash
-npm run build
-```
-
-本地预览生产环境构建：
-
-```bash
-npm run preview
-```
 
 ## 部署说明
 
@@ -56,7 +46,7 @@ npm run preview
 1. 在 Cloudflare Pages 创建新项目
 2. 连接 Git 仓库
 3. 构建设置：
-   - 框架预设：选择 "Nuxt"
+   - 框架预设：选择 "Nuxt.js"
    - 环境变量：添加 `.env` 中的所有变量
 
 ### Vercel 部署
