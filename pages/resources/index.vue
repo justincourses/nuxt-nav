@@ -113,7 +113,7 @@ definePageMeta({
 
 import { useDebounceFn } from '@vueuse/core'
 
-usePageTitle('合作伙伴', '展示我们的合作伙伴和他们的成功案例，了解如何通过合作实现共赢');
+usePageTitle('学习资源', '精选优质的学习资源和开发工具，帮助开发者提升技能、提高效率，打造更好的开发体验');
 
 const route = useRoute()
 const router = useRouter()

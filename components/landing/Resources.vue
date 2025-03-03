@@ -22,7 +22,7 @@ const { data: rsources } = await useAsyncData<Resource[]>('rsources', () => quer
 
 const router = useRouter()
 const searchQuery = ref('')
-const displayCount = 6
+const displayCount = 12
 const currentBatch = ref<Resource[]>([])
 
 const filteredResources = computed(() => {

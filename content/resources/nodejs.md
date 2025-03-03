@@ -11,7 +11,7 @@ tags:
   - 运行时
 category: 工具
 description: Node.js 是一个开源、跨平台的 JavaScript 运行时环境，它让 JavaScript 可以运行在服务器端，用于构建高性能的网络应用程序。
-ref: https://www.nodebeginner.org/index-zh-cn.html
+ref: https://nodejs.org/
 ---
 
 Node.js 是一个基于 Chrome V8 引擎的 JavaScript 运行时环境，它使得开发者可以使用 JavaScript 来编写服务器端应用程序。

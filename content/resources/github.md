@@ -11,7 +11,7 @@ tags:
   - 协作
 category: 工具
 description: GitHub 是全球最大的代码托管平台，它不仅提供代码托管服务，还包括项目管理、团队协作、CI/CD等功能，是开发者必不可少的工具。
-ref: https://github.com/CatOneTwo/GitHub-Tutorial
+ref: https://github.com/
 ---
 
 GitHub 是世界上最大的代码托管平台和开发者社区，它为开源项目和私有项目提供了完整的协作开发解决方案。

@@ -1,12 +1,13 @@
 <script setup lang="ts">
-const { data: partners } = await useAsyncData('partners', () => queryContent('partner')
+const { data: partners } = await useAsyncData('partners', () => queryContent('partner').skip(0)
+  .where({ tags: { $not: { $contains: '小报童' } } })
   .find()
 )
 </script>
 
 <template>
-  <div class="partner-section my-16">
-    <h2 class="text-2xl font-bold text-slate-500 hover:text-slate-600 dark:hover:text-sky-400 transition-colors text-center"
+  <div class="partner-section my-20">
+    <h2 class="text-xl font-bold text-slate-500 hover:text-slate-600 dark:hover:text-sky-400 transition-colors text-center"
       title="查看更多合作伙伴">
       <NuxtLink to="/partner">
         合作伙伴
