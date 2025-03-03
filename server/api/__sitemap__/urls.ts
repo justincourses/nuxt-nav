@@ -7,13 +7,11 @@ export default defineSitemapEventHandler(async (e) => {
   const contentList = (await serverQueryContent(e).find()) as ParsedContent[]
 
   return contentList
-    .filter(c => c._path.startsWith('/partner') || c._path.startsWith('/resources'))
-    .map((c) => {
-      return asSitemapUrl({
-        loc: c._path,
-        lastmod: c.updatedAt || new Date().toISOString(),
-        changefreq: 'daily',
-        priority: 0.8
-      })
-    })
+    .filter(c => c._path?.startsWith('/'))
+    .map((c) => ({
+      loc: `${c._path}`,
+      lastmod: c.updatedAt,
+      priority: 0.8,
+      changefreq: 'daily'
+    }))
 })
