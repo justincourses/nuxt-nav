@@ -6,8 +6,8 @@ icon: simple-icons:openai
 tags:
   - AI
   - 代码生成
-  - 自动补全
-  - 编程助手
+  - OpenAI
+  - Codex
 category: 工具
 description: OpenAI Codex 是 OpenAI 开发的 AI 代码生成模型，基于 GPT-3 架构并在海量代码库上训练，能够将自然语言描述转换为可执行代码，是 GitHub Copilot 的核心技术。
 ref: https://openai.com/index/openai-codex/

@@ -5,8 +5,9 @@ image: /images/resources/nodejs.png
 icon: simple-icons:googlegemini
 tags:
   - AI
-  - 命令行工具
-  - 开发工具
+  - 命令行
+  - Google
+  - Gemini
 category: 工具
 description: Gemini CLI 是 Google 开发的命令行 AI 助手工具，基于强大的 Gemini 模型，为开发者提供在终端中直接与 AI 交互的能力，支持代码生成、问题解答和任务自动化。
 ref: https://ai.google.dev/gemini-api
