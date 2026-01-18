@@ -10,7 +10,7 @@ const { data: partners } = await useAsyncData('partners', () => queryContent('pa
     <h2 class="text-xl font-bold text-slate-500 hover:text-slate-600 dark:hover:text-sky-400 transition-colors text-center"
       title="查看更多合作伙伴">
       <NuxtLink to="/partner">
-        合作伙伴
+        赞助
       </NuxtLink>
     </h2>
     <div class="mt-8 flex flex-wrap items-center justify-center gap-4">

@@ -9,7 +9,7 @@ const menuitems = [
     path: "/resources",
   },
   {
-    title: "合作伙伴",
+    title: "赞助",
     path: "/partner",
   },
   {

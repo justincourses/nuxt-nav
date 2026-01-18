@@ -1,7 +1,7 @@
 <template>
   <div class="max-w-4xl mx-auto pt-8">
     <CommonSectionhead class="mb-12">
-      <template v-slot:title>合作伙伴</template>
+      <template v-slot:title>赞助</template>
       <template v-slot:desc>我们与众多优秀的企业和组织建立了长期稳定的合作关系，共同为用户提供更好的服务</template>
     </CommonSectionhead>
 

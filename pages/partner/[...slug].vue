@@ -63,7 +63,7 @@ const breadcrumbLinks = (currentTitle: string) => [
     to: '/'
   },
   {
-    label: '合作伙伴',
+    label: '赞助',
     icon: 'i-heroicons-users',
     to: '/partner'
   },

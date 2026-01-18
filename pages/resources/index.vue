@@ -14,7 +14,6 @@
             v-model.trim="searchKeyword"
             placeholder="搜索资源..."
             icon="i-heroicons-magnifying-glass-20-solid"
-            @input="handleSearch"
             class="border-gray-200 dark:border-gray-700"
           />
         </UFormGroup>
@@ -25,7 +24,6 @@
             v-model="selectedCategory"
             :options="[{ label: '全部分类', value: '' }, ...categories.map(c => ({ label: c, value: c }))]"
             placeholder="选择分类"
-            @update:model-value="handleSearch"
             class="border-gray-200 dark:border-gray-700"
           />
         </UFormGroup>
@@ -36,8 +34,8 @@
             v-model="selectedTags"
             :options="tagOptions"
             multiple
+            value-attribute="value"
             placeholder="选择标签"
-            @update:model-value="handleSearch"
             class="border-gray-200 dark:border-gray-700"
           >
             <template #label>
@@ -106,66 +104,148 @@
 </template>
 
 <script setup lang="ts">
+import { useDebounceFn } from '@vueuse/core'
+
 definePageMeta({
   layout: 'resources',
+  // Keep SSR false for consistent hydration, although SSR true with proper hydration handling is better.
+  // Given previous issues, we'll respect the existing config.
   ssr: false
 })
-
-import { useDebounceFn } from '@vueuse/core'
 
 usePageTitle('学习资源', '精选优质的学习资源和开发工具，帮助开发者提升技能、提高效率，打造更好的开发体验');
 
 const route = useRoute()
 const router = useRouter()
 
+// --- Infinite Scroll State ---
 const itemsPerPage = 6
 const displayedItems = ref<any[]>([])
 const listData = ref<any[]>([])
 const currentIndex = ref(0)
 
-// Filter states
-const searchKeyword = ref('')
-const selectedCategory = ref('')
-const selectedTags = ref<string[]>([])
+// --- Filter State ---
+// Initialize from URL query immediately
+const searchKeyword = ref((route.query.keyword as string) || '')
+const selectedCategory = ref((route.query.category as string) || '')
+
+const getTagsFromQuery = (tagsQuery: string | string[] | null | undefined): string[] => {
+  if (!tagsQuery) return []
+  if (Array.isArray(tagsQuery)) {
+    return tagsQuery.flatMap(t => (t || '').split(',')).filter(Boolean)
+  }
+  return (tagsQuery as string).split(',').filter(Boolean)
+}
+
+const selectedTags = ref<string[]>(getTagsFromQuery(route.query.tags))
+
 const categories = ref<string[]>([])
 const tags = ref<string[]>([])
 
-// Computed options for UI components
+// --- UI Helpers ---
 const tagOptions = computed(() => tags.value.map(tag => ({ label: tag, value: tag })))
-
-// Form state
 const formState = reactive({
   keyword: searchKeyword,
   category: selectedCategory,
   tags: selectedTags
 })
 
-// Update URL when filter changes
-const updateUrlQuery = () => {
-  const query: Record<string, string | string[]> = {}
+// --- Data Fetching: Categories & Tags (Initial Load) ---
+// We fetch ALL resources once to extract available categories and tags.
+// This is efficient enough for moderate dataset sizes.
+const { data: allResources } = await useAsyncData('all-resources-meta', () =>
+  queryContent('resources')
+    .only(['category', 'tags'])
+    .find()
+)
 
-  if (searchKeyword.value) {
-    query.keyword = searchKeyword.value
-  }
+if (allResources.value) {
+  const categorySet = new Set<string>()
+  const tagSet = new Set<string>()
 
-  if (selectedCategory.value) {
-    query.category = selectedCategory.value
-  }
+  allResources.value.forEach((item: any) => {
+    if (item.category) categorySet.add(item.category)
+    if (item.tags) item.tags.forEach((tag: string) => tagSet.add(tag))
+  })
 
-  if (selectedTags.value.length > 0) {
-    query.tags = selectedTags.value
-  }
-
-  // Replace URL without triggering a page reload
-  router.replace({ query })
+  categories.value = Array.from(categorySet).sort()
+  tags.value = Array.from(tagSet).sort()
 }
 
-// Watch for filter changes and update URL
+// --- Logic: User Input -> Update URL ---
+// Using debounce to avoid rapid URL updates on typing
+const updateUrl = useDebounceFn(() => {
+  const query: Record<string, string | string[]> = {}
+
+  if (searchKeyword.value) query.keyword = searchKeyword.value
+  if (selectedCategory.value) query.category = selectedCategory.value
+  if (selectedTags.value.length > 0) query.tags = selectedTags.value.join(',')
+
+  router.replace({ query })
+}, 300)
+
+// Watch user inputs to trigger URL update
 watch([searchKeyword, selectedCategory, selectedTags], () => {
-  updateUrlQuery()
+  updateUrl()
 }, { deep: true })
 
-// Define handleAppend first
+// --- Logic: URL Change -> Fetch Data ---
+// This is the core logic. We watch the URL query and fetch data accordingly.
+// This handles initial load, browser back/forward buttons, and user filter changes.
+const fetchResources = async () => {
+  // Reset pagination on new search
+  currentIndex.value = 0
+  displayedItems.value = []
+
+  let query = queryContent('resources').only(['_id', '_path', 'title', 'summary', 'category', 'tags', 'image'])
+
+  const keyword = route.query.keyword as string
+  const category = route.query.category as string
+  const currentTags = getTagsFromQuery(route.query.tags)
+
+  // Apply Keyword Filter
+  if (keyword) {
+    query = query.where({
+      $or: [
+        { title: { $icontains: keyword } },
+        { summary: { $icontains: keyword } },
+        { description: { $icontains: keyword } },
+        { category: { $icontains: keyword } }
+      ]
+    })
+  }
+
+  // Apply Category Filter
+  if (category) {
+    query = query.where({ category: category })
+  }
+
+  // Apply Tags Filter
+  if (currentTags.length > 0) {
+    query = query.where({ tags: { $containsAny: currentTags } })
+  }
+
+  // Execute Query
+  // We use a unique key based on query params to ensure correct hydration matching if we were using SSR,
+  // and to force re-evaluation.
+  const queryKey = `resources-${JSON.stringify(route.query)}`
+  const { data } = await useAsyncData(queryKey, () => query.find())
+
+  if (data.value) {
+    listData.value = [...data.value]
+    handleAppend()
+  } else {
+    listData.value = []
+  }
+}
+
+// Watch for route query changes immediately
+watch(() => route.query, () => {
+  fetchResources()
+}, { immediate: true, deep: true })
+
+
+// --- Pagination / Infinite Scroll Logic ---
 const handleAppend = () => {
   if (currentIndex.value >= listData.value.length) return
 
@@ -177,7 +257,6 @@ const handleAppend = () => {
   currentIndex.value += itemsPerPage
 }
 
-// Scroll handler
 const handleScroll = () => {
   const scrollHeight = document.documentElement.scrollHeight
   const scrollTop = window.scrollY || document.documentElement.scrollTop
@@ -188,125 +267,19 @@ const handleScroll = () => {
   }
 }
 
-// Debounced search function
-const handleSearch = useDebounceFn(async () => {
-  currentIndex.value = 0
-  displayedItems.value = []
-
-  let query = queryContent('resources').only(['_id', '_path', 'title', 'summary', 'category', 'tags', 'image'])
-  const hasFilters = searchKeyword.value || selectedCategory.value || selectedTags.value.length > 0
-
-  // Apply filters if any exist
-  if (searchKeyword.value) {
-    query = query.where({
-      $or: [
-        { title: { $icontains: searchKeyword.value } },
-        { summary: { $icontains: searchKeyword.value } },
-        { description: { $icontains: searchKeyword.value } },
-        { category: { $icontains: searchKeyword.value } }
-      ]
-    })
-  }
-
-  // Apply category filter
-  if (selectedCategory.value) {
-    query = query.where({ category: selectedCategory.value })
-  }
-
-  // Apply tags filter
-  if (selectedTags.value.length > 0) {
-    query = query.where({ tags: { $containsAny: selectedTags.value } })
-  }
-
-  // Execute the query
-  const { data } = await useAsyncData(`resources-${Date.now()}`, () => query.find())
-
-  if (data.value) {
-    listData.value = [...data.value]
-    handleAppend()
-  }
-}, 300)
-
-// Reset function
-const handleReset = async () => {
+// --- Reset Logic ---
+const handleReset = () => {
   searchKeyword.value = ''
   selectedCategory.value = ''
   selectedTags.value = []
-
-  // Use initial data for reset
-  if (initialData.value) {
-    listData.value = [...initialData.value]
-    displayedItems.value = []
-    currentIndex.value = 0
-    handleAppend()
-  }
+  // This will trigger the watch -> updateUrl -> route change -> fetchResources chain
 }
 
-// Fetch and process initial data
-const { data: initialData } = await useAsyncData('initial-resources', () =>
-  queryContent('resources')
-    .only(['_id', '_path', 'title', 'summary', 'category', 'tags', 'image'])
-    .find()
-)
-
-// Initialize categories and tags
-if (initialData.value && initialData.value.length > 0) {
-  const categorySet = new Set<string>()
-  const tagSet = new Set<string>()
-
-  initialData.value.forEach((item: any) => {
-    if (item.category) categorySet.add(item.category)
-    if (item.tags) item.tags.forEach((tag: string) => tagSet.add(tag))
-  })
-
-  categories.value = Array.from(categorySet).sort()
-  tags.value = Array.from(tagSet).sort()
-
-  // Set initial data
-  listData.value = [...initialData.value]
-
-  // Apply URL query parameters if they exist
-  const { keyword, category, tags: urlTags } = route.query
-
-  if (keyword && typeof keyword === 'string') {
-    searchKeyword.value = keyword
-  }
-
-  if (category && typeof category === 'string') {
-    selectedCategory.value = category
-  }
-
-  if (urlTags) {
-    // Handle both single tag and array of tags
-    const tagArray = Array.isArray(urlTags)
-      ? urlTags.filter((tag): tag is string => typeof tag === 'string')
-      : typeof urlTags === 'string'
-        ? [urlTags]
-        : []
-
-    // Only set tags that actually exist in our tag list
-    selectedTags.value = tagArray.filter(tag => tags.value.includes(tag))
-  }
-
-  // If any filters were applied from URL, trigger search
-  if (keyword || category || urlTags) {
-    handleSearch()
-  }
-}
-
-// Load initial items
-watchEffect(() => {
-  if (listData.value.length > 0 && displayedItems.value.length === 0) {
-    handleAppend()
-  }
-})
-
-// Setup scroll listener
+// --- Lifecycle ---
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
 })
 
-// Cleanup scroll listener
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
 })
