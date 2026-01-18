@@ -1,27 +1,27 @@
 <script setup>
 const menuitems = [
   {
-    title: "Home",
+    title: "首页",
     path: "/",
   },
   {
-    title: "Resources",
+    title: "资源",
     path: "/resources",
   },
   {
-    title: "Partners",
+    title: "合作伙伴",
     path: "/partner",
   },
   {
-    title: "About",
+    title: "关于",
     path: "/about",
   },
   {
-    title: "Contact",
+    title: "联系",
     path: "/contact",
   },
   {
-    title: "Submit",
+    title: "提交",
     path: "/submit",
   },
 ];
