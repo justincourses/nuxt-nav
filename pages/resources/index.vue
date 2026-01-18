@@ -25,7 +25,7 @@
             v-model="selectedCategory"
             :options="[{ label: '全部分类', value: '' }, ...categories.map(c => ({ label: c, value: c }))]"
             placeholder="选择分类"
-            @change="handleSearch"
+            @update:model-value="handleSearch"
             class="border-gray-200 dark:border-gray-700"
           />
         </UFormGroup>
@@ -34,10 +34,10 @@
         <UFormGroup class="w-64">
           <USelectMenu
             v-model="selectedTags"
-            :options="tags"
+            :options="tagOptions"
             multiple
             placeholder="选择标签"
-            @change="handleSearch"
+            @update:model-value="handleSearch"
             class="border-gray-200 dark:border-gray-700"
           >
             <template #label>
@@ -129,6 +129,9 @@ const selectedCategory = ref('')
 const selectedTags = ref<string[]>([])
 const categories = ref<string[]>([])
 const tags = ref<string[]>([])
+
+// Computed options for UI components
+const tagOptions = computed(() => tags.value.map(tag => ({ label: tag, value: tag })))
 
 // Form state
 const formState = reactive({
