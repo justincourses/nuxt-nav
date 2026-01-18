@@ -92,7 +92,7 @@ const isDarkMode = computed(() => {
               class="pt-1.5 text-gray-500 dark:text-slate-600 hover:text-gray-700 dark:hover:text-gray-400">
               <Icon name="ph:lightbulb-filament-bold" class="h-5 w-5" />
             </button>
-            <NuxtLink to="https://s.zhaikr.com/resourses-free" target="_blank" rel="noopener"
+            <NuxtLink to="https://justincourse.com/free" target="_blank" rel="noopener"
               class="hover:text-gray-500 dark:hover:text-gray-300 transition-colors duration-300">免费试听</NuxtLink>
             <LandingLink href="https://justincourse.com/pricing" size="md"
               styleName="primary" target="_blank" rel="noopener" className="transition-colors duration-300">立即加入
@@ -141,7 +141,7 @@ const isDarkMode = computed(() => {
             </li>
           </ul>
           <div class="flex items-center mt-3 gap-4">
-            <LandingLink href="https://s.zhaikr.com/resourses-free" size="md" :block="true" styleName="muted"
+            <LandingLink href="https://justincourse.com/free" size="md" :block="true" styleName="muted"
               target="_blank" rel="noopener" className="hover:text-gray-500 transition-colors duration-300">免费试听
             </LandingLink>
             <LandingLink href="https://justincourse.com/pricing" size="md"

@@ -6,7 +6,7 @@ const handleClose = () => {
 }
 
 const handleGetOffer = () => {
-  window.open('https://buy.stripe.com/fZe9AW506dnr3IY6oq?prefilled_promo_code=XMAS2024', '_blank');
+  window.open('https://justincourse.com/pricing', '_blank');
 }
 </script>
 
