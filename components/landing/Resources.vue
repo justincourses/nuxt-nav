@@ -1,29 +1,25 @@
 <script setup lang="ts">
 interface Resource {
   _id: string
+  _path: string
   title: string
   summary: string
   category: string
-  url: string
   icon?: string
 }
 
 const { data: rsources } = await useAsyncData<Resource[]>('rsources', () => queryContent('resources')
+  .only(['_id', '_path', 'title', 'summary', 'category', 'icon'])
   .find()
-  .then(items => items.map(item => ({
-    _id: item._id,
-    title: item.title as string,
-    summary: item.summary as string,
-    category: item.category as string,
-    url: item.url as string,
-    icon: item.icon || undefined
-  })))
 )
 
 const router = useRouter()
 const searchQuery = ref('')
 const displayCount = 12
-const currentBatch = ref<Resource[]>([])
+
+// Use useState to share the displayed resources between server and client
+// This ensures SSR and CSR render the exact same list initially
+const currentBatch = useState<Resource[]>('landing-resources-batch', () => [])
 
 const filteredResources = computed(() => {
   if (!searchQuery.value || !rsources.value) return rsources.value
@@ -39,11 +35,17 @@ const filteredResources = computed(() => {
 // Function to get random items from array
 const getRandomItems = (items: Resource[] | null, count: number): Resource[] => {
   if (!items) return []
+  // Simple random shuffle
   const shuffled = [...items].sort(() => 0.5 - Math.random())
   return shuffled.slice(0, count)
 }
 
-// Initialize and refresh displayed resources
+// Initialize on server side or if empty
+if (currentBatch.value.length === 0 && rsources.value) {
+  currentBatch.value = getRandomItems(rsources.value, displayCount)
+}
+
+// Client-side only refresh
 const refreshBatch = () => {
   const items = filteredResources.value
   if (items) {
@@ -51,10 +53,19 @@ const refreshBatch = () => {
   }
 }
 
-// Watch for changes in filtered resources
-watch(filteredResources, () => {
-  refreshBatch()
-}, { immediate: true })
+// Watch for search query changes to update the batch
+watch(searchQuery, () => {
+  if (searchQuery.value) {
+    // When searching, show relevant results immediately
+    const items = filteredResources.value
+    if (items) {
+      currentBatch.value = items.slice(0, displayCount)
+    }
+  } else {
+    // When clearing search, go back to random
+    refreshBatch()
+  }
+})
 
 const handleSearch = () => {
   if (!searchQuery.value) return
@@ -120,15 +131,15 @@ const handleViewMore = () => {
       </div>
 
       <div class="grid lg:grid-cols-3 md:grid-cols-2 max-md:max-w-lg mx-auto gap-8" v-if="rsources">
-        <a
+        <NuxtLink
           v-for="resource in currentBatch"
           :key="resource._id"
-          :href="resource.url"
+          :to="resource._path"
           :title="resource.summary"
           class="p-6 flex gap-6 bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-all"
         >
           <div class="w-12 h-12 bg-gray-100 dark:bg-gray-700 p-3 rounded-md shrink-0">
-            <Icon :name="(resource.icon || '').toLowerCase()" class="w-full h-full" />
+            <Icon v-if="resource.icon" :name="resource.icon" class="w-full h-full" />
           </div>
           <div>
             <div class="flex items-center justify-between mb-3">
@@ -137,7 +148,7 @@ const handleViewMore = () => {
             </div>
             <p class="text-gray-600 dark:text-gray-400 text-sm">{{ resource.summary }}</p>
           </div>
-        </a>
+        </NuxtLink>
       </div>
     </div>
   </div>

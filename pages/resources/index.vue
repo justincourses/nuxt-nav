@@ -69,16 +69,16 @@
       @append="handleAppend"
     >
       <template #default="{ item }">
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden mb-6">
+        <NuxtLink :to="item._path" class="block bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden mb-6 hover:shadow-xl transition-shadow">
           <div class="relative w-full aspect-square">
             <img :src="item.image" :alt="item.title" class="w-full h-full object-cover" />
           </div>
 
           <div class="p-4">
             <div class="flex items-center gap-2 mb-3">
-              <NuxtLink :to="item.url" class="text-xl font-bold hover:text-sky-600 dark:hover:text-sky-400">
+              <h3 class="text-xl font-bold hover:text-sky-600 dark:hover:text-sky-400 transition-colors">
                 {{ item.title }}
-              </NuxtLink>
+              </h3>
             </div>
 
             <p class="text-gray-600 dark:text-gray-400 line-clamp-2">
@@ -99,7 +99,7 @@
               </span>
             </div>
           </div>
-        </div>
+        </NuxtLink>
       </template>
     </masonry-wall>
   </div>
@@ -193,7 +193,7 @@ const handleSearch = useDebounceFn(async () => {
   currentIndex.value = 0
   displayedItems.value = []
 
-  let query = queryContent('resources')
+  let query = queryContent('resources').only(['_id', '_path', 'title', 'summary', 'category', 'tags', 'image'])
   const hasFilters = searchKeyword.value || selectedCategory.value || selectedTags.value.length > 0
 
   // Apply filters if any exist
@@ -203,7 +203,6 @@ const handleSearch = useDebounceFn(async () => {
         { title: { $icontains: searchKeyword.value } },
         { summary: { $icontains: searchKeyword.value } },
         { description: { $icontains: searchKeyword.value } },
-        { body: { $icontains: searchKeyword.value } },
         { category: { $icontains: searchKeyword.value } }
       ]
     })
@@ -245,7 +244,9 @@ const handleReset = async () => {
 
 // Fetch and process initial data
 const { data: initialData } = await useAsyncData('initial-resources', () =>
-  queryContent('resources').find()
+  queryContent('resources')
+    .only(['_id', '_path', 'title', 'summary', 'category', 'tags', 'image'])
+    .find()
 )
 
 // Initialize categories and tags

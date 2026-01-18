@@ -63,9 +63,9 @@ const breadcrumbLinks = (currentTitle: string) => [
     to: '/'
   },
   {
-    label: '合作伙伴',
-    icon: 'i-heroicons-users',
-    to: '/partner'
+    label: '学习资源',
+    icon: 'i-heroicons-academic-cap',
+    to: '/resources'
   },
   {
     label: currentTitle,
