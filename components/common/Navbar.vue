@@ -14,11 +14,11 @@ const menuitems = [
   },
   {
     title: "关于",
-    path: "/about",
+    path: "https://justincourse.com/about",
   },
   {
     title: "联系",
-    path: "/contact",
+    path: "https://justincourse.com/contact",
   },
   {
     title: "提交",
