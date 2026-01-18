@@ -1,7 +1,6 @@
 ---
 title: React
 summary: A JavaScript library for building user interfaces
-url: /resources/react
 image: /images/images/content/3d-printing-3758154_1920.jpg
 icon: logos:react
 tags:

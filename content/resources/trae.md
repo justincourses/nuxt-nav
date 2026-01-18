@@ -1,7 +1,6 @@
 ---
 title: Trae AI IDE
 summary: AI-powered development environment
-url: /resources/trae
 image: /images/content/16x9_Kick_off_meeting__cyberpunk_styl.png
 icon: material-symbols:code
 tags:

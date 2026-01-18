@@ -1,7 +1,6 @@
 ---
 title: PowerShell
 summary: 跨平台的任务自动化和配置管理框架，提供强大的脚本能力
-url: /resources/powershell
 image: /images/resources/powershell.png
 icon: simple-icons:powershell
 tags:

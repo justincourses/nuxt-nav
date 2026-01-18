@@ -1,7 +1,6 @@
 ---
 title: VSCode
 summary: 功能强大的代码编辑器，支持多种编程语言与插件扩展
-url: /resources/vscode
 image: /images/resources/vscode.png
 icon: logos:visual-studio-code
 tags:

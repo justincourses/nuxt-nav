@@ -1,7 +1,6 @@
 ---
 title: Windsurf AI IDE
 summary: AI-powered development environment by Codeium
-url: /resources/windsurf
 image: /images/content/16x9_technical_office_.png
 icon: material-symbols:code
 tags:

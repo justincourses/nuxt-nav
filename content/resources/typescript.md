@@ -1,7 +1,6 @@
 ---
 title: TypeScript
 summary: JavaScript 的超集，为 JavaScript 添加了静态类型系统
-url: /resources/typescript
 image: /images/resources/typescript.png
 icon: logos:typescript-icon
 tags:

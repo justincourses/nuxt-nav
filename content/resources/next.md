@@ -1,7 +1,6 @@
 ---
 title: Next.js
 summary: The React Framework for Production
-url: /resources/next
 image: /images/resources/copilot.png
 icon: logos:nextjs-icon
 tags:

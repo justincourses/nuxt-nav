@@ -1,7 +1,6 @@
 ---
 title: Git
 summary: 分布式版本控制系统，用于跟踪和管理代码变更
-url: /resources/git
 image: /images/resources/git.png
 icon: logos:git-icon
 tags:

@@ -1,7 +1,6 @@
 ---
 title: Google Antigravity
 summary: Google DeepMind 开发的先进 AI 编程助手，提供强大的代码生成和智能开发体验
-url: /resources/google-antigravity
 image: /images/resources/typescript.png
 icon: simple-icons:google
 tags:

@@ -1,7 +1,6 @@
 ---
 title: AI ChatBot
 summary: Open source AI chatbot example built by Vercel
-url: /resources/ai-chatbot
 image: /images/content/16x9_technical_office_1.png
 icon: material-symbols:chat
 tags:

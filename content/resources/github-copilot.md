@@ -1,7 +1,6 @@
 ---
 title: GitHub Copilot
 summary: GitHub 推出的 AI 编程助手，基于 OpenAI Codex 模型提供智能代码建议
-url: /resources/github-copilot
 image: /images/resources/github.png
 icon: mdi:github
 tags:

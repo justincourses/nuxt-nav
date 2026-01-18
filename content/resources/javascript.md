@@ -1,7 +1,6 @@
 ---
 title: JavaScript
 summary: 强大的脚本语言，为网页提供交互性和动态功能
-url: /resources/javascript
 image: /images/resources/javascript.png
 icon: logos:javascript
 tags:

@@ -1,7 +1,6 @@
 ---
 title: GitHub
 summary: 全球最大的代码托管平台，提供代码托管、协作和开源社区
-url: /resources/github
 image: /images/resources/github.png
 icon: logos:github-icon
 tags:

@@ -1,7 +1,6 @@
 ---
 title: OpenAI Codex
 summary: OpenAI 推出的 AI 代码生成模型，将自然语言转换为代码
-url: /resources/openai-codex
 image: /images/resources/javascript.png
 icon: simple-icons:openai
 tags:

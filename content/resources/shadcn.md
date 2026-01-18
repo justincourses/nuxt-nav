@@ -1,7 +1,6 @@
 ---
 title: Shadcn UI
 summary: Beautifully designed components built with Radix UI and Tailwind CSS
-url: /resources/shadcn
 image: /images/content/highway-821487_1920.jpg
 icon: material-symbols:dashboard-customize
 tags:

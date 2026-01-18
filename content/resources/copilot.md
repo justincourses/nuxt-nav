@@ -1,7 +1,6 @@
 ---
 title: GitHub Copilot
 summary: AI 驱动的代码助手，提供智能代码补全和生成建议
-url: /resources/copilot
 image: /images/resources/copilot.png
 icon: simple-icons:githubcopilot
 tags:

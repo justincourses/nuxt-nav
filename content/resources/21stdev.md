@@ -1,7 +1,6 @@
 ---
 title: 21st.dev
 summary: React 模板代码片段分享网站
-url: /resources/21stdev
 image: /images/content/construction-196302_1920.jpg
 icon: material-symbols:web
 tags:

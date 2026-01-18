@@ -1,7 +1,6 @@
 ---
 title: Cursor
 summary: 集成 AI 的新一代代码编辑器，提供智能代码补全和生成功能
-url: /resources/cursor
 image: /images/resources/cursor.png
 icon: ph:cursor-text-bold
 tags:

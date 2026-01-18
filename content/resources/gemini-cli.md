@@ -1,7 +1,6 @@
 ---
 title: Gemini CLI
 summary: Google 推出的命令行 AI 助手，基于 Gemini 模型提供强大的终端交互体验
-url: /resources/gemini-cli
 image: /images/resources/nodejs.png
 icon: simple-icons:googlegemini
 tags:

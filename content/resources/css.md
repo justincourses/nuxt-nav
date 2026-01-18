@@ -1,7 +1,6 @@
 ---
 title: CSS
 summary: 层叠样式表，用于定义网页的视觉呈现和布局
-url: /resources/css
 image: /images/resources/css.png
 icon: logos:css-3
 tags:

@@ -1,7 +1,6 @@
 ---
 title: Nuxt
 summary: 基于 Vue 的全栈框架，为 Vue 应用提供服务端渲染、静态站点生成等现代化开发体验
-url: /resources/nuxt
 image: /images/resources/nuxt.png
 icon: logos:nuxt-icon
 tags:

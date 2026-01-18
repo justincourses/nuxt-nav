@@ -1,7 +1,6 @@
 ---
 title: 张鑫旭的个人博客
 summary: 专注于 Web 前端偏前领域，分享 CSS、HTML、JavaScript 等技术
-url: /resources/zhangxinxu
 image: /images/resources/zhangxinxu.png
 icon: mdi:language-css3
 tags:

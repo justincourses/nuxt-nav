@@ -1,7 +1,6 @@
 ---
 title: Claude Code
 summary: Anthropic 推出的 AI 编程助手，提供智能代码生成和对话式编程体验
-url: /resources/claude-code
 image: /images/resources/cursor.png
 icon: ph:code-bold
 tags:
