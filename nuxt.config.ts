@@ -12,7 +12,6 @@ export default defineNuxtConfig({
   },
 
   modules: [
-    "nuxt-icon",
     "@nuxt/ui",
     "@nuxtjs/sitemap",
     "@nuxt/content",

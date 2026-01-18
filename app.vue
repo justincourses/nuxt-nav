@@ -8,10 +8,10 @@
 </template>
 
 <script setup lang="ts">
-import { useToast } from '~/composables/useToast';
+import { useCustomToast } from '~/composables/useCustomToast';
 
 const toastRef = ref();
-const { setToastRef } = useToast();
+const { setToastRef } = useCustomToast();
 
 onMounted(() => {
   setToastRef(toastRef.value);

@@ -6,7 +6,7 @@ interface ToastRef {
 
 const toastRef = ref<ToastRef>();
 
-export const useToast = () => {
+export const useCustomToast = () => {
   const setToastRef = (ref: ToastRef) => {
     toastRef.value = ref;
   };

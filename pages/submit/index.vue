@@ -96,7 +96,7 @@
 
 <script setup lang="ts">
 import { validateForm, type FormData, type FormErrors } from '~/utils/validation';
-import { useToast } from '~/composables/useToast';
+import { useCustomToast } from '~/composables/useCustomToast';
 
 definePageMeta({
   layout: "submit",
@@ -118,7 +118,7 @@ const form = ref<FormData>({
 
 const errors = ref<FormErrors>({});
 const isSubmitting = ref(false);
-const { showToast } = useToast();
+const { showToast } = useCustomToast();
 
 const handleSubmit = async () => {
   try {
