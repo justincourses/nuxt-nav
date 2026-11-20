@@ -1,1 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /submit
+Disallow: /api/
 
+Sitemap: https://nav.justincourse.com/sitemap.xml
