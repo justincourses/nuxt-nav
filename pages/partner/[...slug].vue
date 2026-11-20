@@ -74,5 +74,5 @@ const breadcrumbLinks = (currentTitle: string) => [
 ]
 
 const { data: doc } = await useAsyncData('doc', () => queryContent().where({ _path: useRoute().path }).findOne())
-usePageTitle(doc.value?.title, doc.value?.summary);
+usePageTitle(doc.value?.title, doc.value?.description || doc.value?.summary);
 </script>

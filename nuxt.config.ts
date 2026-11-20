@@ -44,6 +44,7 @@ export default defineNuxtConfig({
 
   app: {
     head: {
+      htmlAttrs: { lang: "zh-CN" },
       title: "Web 开发课程资源导航",
       meta: [
         { charset: "utf-8" },
@@ -53,7 +54,6 @@ export default defineNuxtConfig({
           content:
             "Web 开发课程相关的工具、资源、技术和教程的综合性资源导航网站，为开发者提供实用的学习参考",
         },
-        { property: "og:url", content: "https://nav.justincourse.com/" },
         { property: "og:type", content: "website" },
         { property: "og:title", content: "Web 开发课程资源导航" },
         {
@@ -67,7 +67,6 @@ export default defineNuxtConfig({
         },
         { name: "twitter:card", content: "summary_large_image" },
         { property: "twitter:domain", content: "nav.justincourse.com" },
-        { property: "twitter:url", content: "https://nav.justincourse.com/" },
         { name: "twitter:title", content: "Web 开发课程资源导航" },
         {
           name: "twitter:description",

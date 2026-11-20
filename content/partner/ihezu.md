@@ -9,7 +9,7 @@ tags:
   - 会员
   - 合租
 category: 娱乐服务
-description: 奈飞小铺为用户提供Netflix、Disney+、Amazon Prime等全球流媒体平台的会员合租服务，打造安全、便捷、经济的观影体验。
+description: 奈飞小铺（又称奈飛小舖、奈菲小铺、网飞小铺）提供 Netflix、Disney+、Amazon Prime 等流媒体会员合租服务，账号独立、安全稳定，经济实惠。
 ref: https://ihezu.fans/GgBeqE
 ---
 
