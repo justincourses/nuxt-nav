@@ -8,6 +8,7 @@ tags:
   - 营销
   - 获客
   - 出海
+  - 小报童
 category: 营销指南
 description: 基于一年Reddit运营经验，系统化总结海外社区营销方法论，从新手入门到实战策略的完整指南。
 ref: https://www.xiaobot.net/p/reddit?refer=8e34cd7f-0014-4bca-bfbf-ea155de7c005

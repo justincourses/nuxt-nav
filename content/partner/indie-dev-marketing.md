@@ -8,6 +8,7 @@ tags:
   - 营销
   - 获客
   - 增长
+  - 小报童
 category: 营销指南
 description: 专注于帮助独立开发者突破增长瓶颈，系统化掌握市场营销、流量获取和用户增长的实战指南，目标达成1000位狂热用户。
 ref: https://www.xiaobot.net/p/devgrowth?refer=8e34cd7f-0014-4bca-bfbf-ea155de7c005

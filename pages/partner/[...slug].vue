@@ -2,7 +2,7 @@
   <div>
     <!-- 面包屑导航 -->
     <div class="max-w-4xl mx-auto pt-8">
-      <ContentDoc v-slot="{ doc }">
+      <ContentDoc :head="false" v-slot="{ doc }">
         <div class="flex justify-center">
           <nav aria-label="Breadcrumb">
             <UBreadcrumb :links="breadcrumbLinks(doc?.title ?? '')" divider="i-heroicons-chevron-right"
@@ -23,7 +23,7 @@
             </h1>
             <small v-if="doc.category" class="inline-block text-indigo-300 text-sm my-2 px-3 py-1 rounded-full bg-indigo-900/50 border border-indigo-300/30">{{ doc.category }}</small>
             <p class="text-lg md:text-xl mb-12 text-gray-200">{{ doc.summary }}</p>
-            <a :href="doc.ref" target="_blank" rel="noopener noreferrer"
+            <a :href="doc.ref" target="_blank" rel="sponsored noopener noreferrer"
               class="inline-block bg-white/70 text-sm text-blue-600 font-semibold py-3 px-6 rounded-lg hover:bg-slate-100/70 transition-colors duration-200 no-underline"
               aria-label="在新窗口中了解更多" tabindex="0">
               立即访问
@@ -36,6 +36,21 @@
           <article class="prose dark:prose-invert max-w-none">
             <!-- 内容正文 -->
             <ContentRenderer :value="doc" />
+
+            <!-- 常见问题 -->
+            <section v-if="doc.faq?.length" class="mt-10 pt-8 border-t border-gray-200 dark:border-gray-700 not-prose">
+              <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">常见问题</h2>
+              <dl class="space-y-6">
+                <div v-for="(item, index) in doc.faq" :key="index" class="bg-gray-50 dark:bg-gray-900/50 rounded-lg p-5">
+                  <dt class="text-base font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                    {{ item.question }}
+                  </dt>
+                  <dd class="text-sm leading-relaxed text-gray-600 dark:text-gray-300">
+                    {{ item.answer }}
+                  </dd>
+                </div>
+              </dl>
+            </section>
 
             <!-- 标签 -->
             <div class="flex flex-wrap gap-2 mt-8">
@@ -53,7 +68,8 @@
 
 <script setup lang="ts">
 definePageMeta({
-  layout: 'partner'
+  layout: 'partner',
+  key: (route) => route.fullPath,
 })
 
 const breadcrumbLinks = (currentTitle: string) => [
@@ -73,6 +89,75 @@ const breadcrumbLinks = (currentTitle: string) => [
   }
 ]
 
-const { data: doc } = await useAsyncData('doc', () => queryContent().where({ _path: useRoute().path }).findOne())
-usePageTitle(doc.value?.title, doc.value?.description || doc.value?.summary);
+const route = useRoute()
+const siteUrl = useSiteConfig().url.replace(/\/+$/, '')
+const normalizedPath = route.path.replace(/\/+$/, '') || '/'
+
+const { data: doc } = await useAsyncData(
+  `partner-${normalizedPath}`,
+  () => queryContent().where({ _path: normalizedPath }).findOne()
+)
+
+usePageTitle(
+  doc.value?.title,
+  doc.value?.description || doc.value?.summary,
+  {
+    seoTitle: doc.value?.seoTitle,
+    image: doc.value?.image,
+    ogType: 'article',
+  }
+)
+
+if (doc.value) {
+  const pageUrl = `${siteUrl}${normalizedPath}`
+  const schemas: Record<string, unknown>[] = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: '首页',
+          item: `${siteUrl}/`,
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: '赞助',
+          item: `${siteUrl}/partner`,
+        },
+        {
+          '@type': 'ListItem',
+          position: 3,
+          name: doc.value.title,
+          item: pageUrl,
+        },
+      ],
+    },
+  ]
+
+  if (Array.isArray(doc.value.faq) && doc.value.faq.length > 0) {
+    schemas.push({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: doc.value.faq.map((item: { question: string; answer: string }) => ({
+        '@type': 'Question',
+        name: item.question,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: item.answer,
+        },
+      })),
+    })
+  }
+
+  useHead({
+    script: schemas.map((schema, index) => ({
+      key: `partner-jsonld-${index}`,
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify(schema),
+    })),
+  })
+}
 </script>

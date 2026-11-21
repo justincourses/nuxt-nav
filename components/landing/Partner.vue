@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const excludedPartners = ['请咖啡', 'Rewardful', 'Temu', '长桥证券', 'Fiverr', 'Quick Fox', 'quickfox']
+const excludedPartners = ['请咖啡', 'Rewardful', 'Temu', 'Fiverr', 'Quick Fox', 'quickfox']
 
 const { data: partners } = await useAsyncData('landing-partners', () => queryContent('partner').skip(0)
   .where({ tags: { $not: { $contains: '小报童' } } })
@@ -9,6 +9,10 @@ const { data: partners } = await useAsyncData('landing-partners', () => queryCon
 const filteredPartners = computed(() => {
   return partners.value?.filter(partner => {
     const title = partner.title?.trim()
+    const ref = partner.ref?.toLowerCase() || ''
+    if (ref.includes('xiaobot.net') || partner.tags?.includes('小报童')) {
+      return false
+    }
     return !excludedPartners.some(excluded => excluded.toLowerCase() === title?.toLowerCase())
   }) || []
 })
