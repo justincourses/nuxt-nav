@@ -46,6 +46,6 @@ definePageMeta({
 usePageTitle('合作伙伴', '展示我们的合作伙伴和他们的成功案例，了解如何通过合作实现共赢');
 
 const { data: partners } = await useAsyncData('partners', () =>
-  queryContent('partner').find()
+  queryContent('partner').only(['_path', 'url', 'image', 'title', 'summary', 'category']).find()
 )
 </script>

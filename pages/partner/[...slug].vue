@@ -97,6 +97,9 @@ const { data: doc } = await useAsyncData(
   `partner-${normalizedPath}`,
   () => queryContent().where({ _path: normalizedPath }).findOne()
 )
+if (!doc.value) {
+  throw createError({ statusCode: 404, statusMessage: 'Page Not Found', fatal: true })
+}
 
 usePageTitle(
   doc.value?.title,

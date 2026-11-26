@@ -1,7 +1,48 @@
+import { readdirSync } from 'node:fs'
+import { fileURLToPath } from 'node:url'
 import { defineNuxtConfig } from 'nuxt/config'
+
+// Every real page, built from content/ at build time. Used for prerendering and by
+// server/middleware/guard.ts, which answers anything else with a cheap 404.
+const fromHere = (p: string) => fileURLToPath(new URL(p, import.meta.url))
+const contentPages = ['partner', 'resources'].flatMap((section) =>
+  readdirSync(fromHere(`./content/${section}`))
+    .filter((file) => file.endsWith('.md'))
+    .map((file) => `/${section}/${file.replace(/\.md$/, '').toLowerCase()}`)
+)
+const knownPages = ['/', '/partner', '/resources', '/about', '/contact', '/submit', ...contentPages]
+// First path segments that never render a page: public/ entries, Nuxt internals, API routes.
+const passthroughSegments = [
+  ...readdirSync(fromHere('./public')),
+  '_nuxt', '__nuxt_error', '__nuxt_island', '_ipx', 'api', '__sitemap__', 'sitemap.xml',
+]
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
+
+  runtimeConfig: {
+    guard: { knownPages, passthroughSegments },
+  },
+
+  // Link the CSS bundle instead of inlining ~220KB of it into every HTML response.
+  features: { inlineStyles: false },
+
+  nitro: {
+    prerender: {
+      // Content only changes on deploy, so render every real page once at build time:
+      // visitors get static files and the Pages Function burns no CPU on them.
+      // Except /resources: it is ssr:false (an SPA shell that is cheap to serve), and a
+      // prerendered payload breaks its initial query when opened as /resources?keyword=…
+      routes: [...knownPages.filter((p) => p !== '/resources'), '/sitemap.xml'],
+      crawlLinks: false,
+      // Write partner/ihezu.html, not partner/ihezu/index.html: otherwise Cloudflare Pages
+      // 308-redirects /partner/ihezu to /partner/ihezu/, away from the canonical URL.
+      autoSubfolderIndex: false,
+    },
+    // _routes.json allows 100 rules; one wildcard keeps every image out of the Function.
+    cloudflare: { pages: { routes: { exclude: ['/images/*'] } } },
+  },
   css: ["~/assets/css/main.css"],
 
   postcss: {

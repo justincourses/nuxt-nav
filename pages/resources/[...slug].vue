@@ -73,6 +73,12 @@ const breadcrumbLinks = (currentTitle: string) => [
   }
 ]
 
-const { data: doc } = await useAsyncData('doc', () => queryContent().where({ _path: useRoute().path }).findOne())
+const normalizedPath = useRoute().path.replace(/\/+$/, '') || '/'
+const { data: doc } = await useAsyncData(`resource-${normalizedPath}`, () =>
+  queryContent().where({ _path: normalizedPath }).findOne()
+)
+if (!doc.value) {
+  throw createError({ statusCode: 404, statusMessage: 'Page Not Found', fatal: true })
+}
 usePageTitle(doc.value?.title, doc.value?.summary);
 </script>
